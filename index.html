@@ -13,6 +13,69 @@
                 this.rank = rank;
             }
         }
+
+        const shuffle = (array) => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        let cardList = [
+            new Card("♦️", "A"),
+            new Card("♦️", "2"),
+            new Card("♦️", "3"),
+            new Card("♦️", "4"),
+            new Card("♦️", "5"),
+            new Card("♦️", "6"),
+            new Card("♦️", "7"),
+            new Card("♦️", "8"),
+            new Card("♦️", "9"),
+            new Card("♦️", "10"),
+            new Card("♦️", "J"),
+            new Card("♦️", "Q"),
+            new Card("♦️", "K"),
+            new Card("♥️", "A"),
+            new Card("♥️", "2"),
+            new Card("♥️", "3"),
+            new Card("♥️", "4"),
+            new Card("♥️", "5"),
+            new Card("♥️", "6"),
+            new Card("♥️", "7"),
+            new Card("♥️", "8"),
+            new Card("♥️", "9"),
+            new Card("♥️", "10"),
+            new Card("♥️", "J"),
+            new Card("♥️", "Q"),
+            new Card("♥️", "K"),
+            new Card("♣️", "A"),
+            new Card("♣️", "2"),
+            new Card("♣️", "3"),
+            new Card("♣️", "4"),
+            new Card("♣️", "5"),
+            new Card("♣️", "6"),
+            new Card("♣️", "7"),
+            new Card("♣️", "8"),
+            new Card("♣️", "9"),
+            new Card("♣️", "10"),
+            new Card("♣️", "J"),
+            new Card("♣️", "Q"),
+            new Card("♣️", "K"),
+            new Card("♠️", "A"),
+            new Card("♠️", "2"),
+            new Card("♠️", "3"),
+            new Card("♠️", "4"),
+            new Card("♠️", "5"),
+            new Card("♠️", "6"),
+            new Card("♠️", "7"),
+            new Card("♠️", "8"),
+            new Card("♠️", "9"),
+            new Card("♠️", "10"),
+            new Card("♠️", "J"),
+            new Card("♠️", "Q"),
+            new Card("♠️", "K"),
+        ]
     </script>
 </body>
 </html>
