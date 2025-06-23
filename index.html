@@ -4,12 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .player h1 {
+            font-size: 16px;
+            line-height: 0.5;
+        }
+
+        .card-deck {
+            display: flex;
+            gap: 5px;
+        }
+
+        .card {
+            width: 30px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 1.5px 1.5px 1px;
+            background-color: #fcfcfc;
+            user-select: none;
+        }
+    </style>
 </head>
 <body>
     <section id="game-container">
-        <div>
+        <div class="player">
             <h1>Andy</h1>
-            <div>
+            <div class="card-deck">
                 <div class="card">?</div>
                 <div class="card">?</div>
                 <div class="card">?</div>
@@ -17,9 +43,9 @@
                 <div class="card">?</div>
             </div>
         </div>
-        <div>
+        <div class="player">
             <h1>Bob</h1>
-            <div>
+            <div class="card-deck">
                 <div class="card">?</div>
                 <div class="card">?</div>
                 <div class="card">?</div>
