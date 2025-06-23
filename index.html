@@ -14,6 +14,17 @@
             }
         }
 
+        class Player {
+            constructor (name, predictStrategy, playingStrategy) {
+                this.name = name;
+                this.deck = [];
+                this.expectedWin = null;
+                this.totalWin = 0;
+                this.predictStrategy = predictStrategy;
+                this.playingStrategy = playingStrategy;
+            }
+        }
+
         const shuffle = (array) => {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i));
