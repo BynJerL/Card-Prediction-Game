@@ -66,87 +66,22 @@
     </style>
 </head>
 <body>
-    <section id="game-score">
-        <table>
-            <tr>
-                <th>Round</th>
-                <th>1</th>
-                <th>2</th>
-                <th>3</th>
-                <th>4</th>
-                <th>5</th>
-                <th>Score</th>
-            </tr>
-            <tr>
-                <td>Andy</td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Bob</td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Charles</td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Derek</td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td class="round-status"></td>
-                <td></td>
-            </tr>
-        </table>
+    <section id="game-score"></section>
+    <section id="game-container"></section>
+    <section id="current-player">
+        <h1>Andy</h1>
+        <div class="card-deck">
+            <div class="card hidden">?</div>
+            <div class="card hidden">?</div>
+            <div class="card hidden">?</div>
+            <div class="card hidden">?</div>
+            <div class="card hidden">?</div>
+        </div>
+        <div>How many win do you expect?</div>
+        <input type="number" name="win-prediction" id="win-prediction" max="6">
+        <button>Confirm</button>
     </section>
-    <section id="game-container">
-        <div class="player">
-            <h1>Andy</h1>
-            <div class="card-deck">
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-            </div>
-        </div>
-        <div class="player">
-            <h1>Bob</h1>
-            <div class="card-deck">
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-            </div>
-            <div class="player">
-            <h1>Charles</h1>
-            <div class="card-deck">
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-                <div class="card hidden">?</div>
-            </div>
-        </div>
-        </div>
-    </section>
+
     <script>
         const GamePhase = Object.freeze({
             Deal: "Deal",
@@ -186,6 +121,7 @@
                 this.deck = [];
                 this.expectedWin = null;
                 this.totalWin = 0;
+                this.score = 0;
                 this.predictStrategy = predictStrategy;
                 this.playingStrategy = playingStrategy;
             }
