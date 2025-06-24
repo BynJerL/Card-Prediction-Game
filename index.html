@@ -180,6 +180,7 @@
         }
 
         class Player {
+            /** @param {string} name @param {PredictStrategy} predictStrategy @param {PlayingStrategy} playingStrategy*/
             constructor (name, predictStrategy, playingStrategy) {
                 this.name = name;
                 this.deck = [];
@@ -206,10 +207,10 @@
             leadSuit: null,
             phase: GamePhase.Deal,
             players: [
-                new Player("Andy", "User", "User"),
-                new Player("Bob", "Random", "Random"),
-                new Player("Charles", "Random", "Random"),
-                new Player("Derek", "Random", "Random")
+                new Player("Andy", PredictStrategy.User, PlayingStrategy.User),
+                new Player("Bob", PredictStrategy.Random, PlayingStrategy.Random),
+                new Player("Charles", PredictStrategy.Random, PlayingStrategy.Random),
+                new Player("Derek", PredictStrategy.Random, PlayingStrategy.Random)
             ],
             cardList: [
                 new Card("♦️", "A"),
