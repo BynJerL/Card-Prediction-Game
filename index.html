@@ -26,7 +26,7 @@
             align-items: center;
             justify-content: center;
             /* box-shadow: 1.5px 1.5px 1px; */
-            background-color: #fcfcfc;
+            background-color: #fafafa;
             user-select: none;
             position: relative;
         }
@@ -179,6 +179,19 @@
                     playerNameDisplay.textContent = player.name;
                     const playerCardDeckDisplay = document.createElement("div");
                     playerCardDeckDisplay.classList.add("card-deck");
+                    for (let card of player.deck) {
+                        const cardDisplay = document.createElement("div");
+                        cardDisplay.classList.add("card");
+                        const cardRankDisplay = document.createElement("div");
+                        cardRankDisplay.classList.add("rank");
+                        cardRankDisplay.textContent = card.rank;
+                        const cardSuitDisplay = document.createElement("div");
+                        cardSuitDisplay.classList.add("suit");
+                        cardSuitDisplay.textContent = card.suit;
+                        cardDisplay.appendChild(cardRankDisplay);
+                        cardDisplay.appendChild(cardSuitDisplay);
+                        playerCardDeckDisplay.appendChild(cardDisplay);
+                    }
                     playerDisplay.appendChild(playerNameDisplay);
                     playerDisplay.appendChild(playerCardDeckDisplay);
                     gameContainer.appendChild(playerDisplay);
