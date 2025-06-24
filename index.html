@@ -16,7 +16,7 @@
 
         .card-deck {
             display: flex;
-            gap: 5px;
+            gap: 7px;
         }
 
         .card {
@@ -46,7 +46,7 @@
         .hidden {
             border: 2px dashed #888;
             box-sizing: border-box;
-            box-shadow: 0;
+            box-shadow: 0 0 0;
             font-weight: 500;
             color:#444;
         }
@@ -175,6 +175,7 @@
         }
 
         const gameContainer = document.getElementById("game-container");
+        const gameScore = document.getElementById("game-score");
         const GameManager = {
             round: 5,
             leadIndex: 0,
@@ -243,6 +244,9 @@
             init () {
                 this.cardList = shuffle(this.cardList);
                 let i = 0;
+                gameScore.innerHTML = "";
+                const scoreTable = document.createElement("table");
+                gameScore.appendChild(scoreTable);
                 for (let player of this.players) {
                     for (let j = 0; j < this.round; j++) {
                         player.deck.push(this.cardList[i++]);
