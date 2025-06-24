@@ -25,9 +25,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 1.5px 1.5px 1px;
+            /* box-shadow: 1.5px 1.5px 1px; */
             background-color: #fcfcfc;
             user-select: none;
+            position: relative;
+        }
+
+        .hidden {
+            border: 2px dashed #888;
+            box-sizing: border-box;
+            font-weight: 500;
+            color:#444;
         }
     </style>
 </head>
@@ -36,30 +44,30 @@
         <div class="player">
             <h1>Andy</h1>
             <div class="card-deck">
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
             </div>
         </div>
         <div class="player">
             <h1>Bob</h1>
             <div class="card-deck">
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
             </div>
             <div class="player">
             <h1>Charles</h1>
             <div class="card-deck">
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
-                <div class="card">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
+                <div class="card hidden">?</div>
             </div>
         </div>
         </div>
@@ -153,7 +161,11 @@
                 new Card("♠️", "J"),
                 new Card("♠️", "Q"),
                 new Card("♠️", "K")
-            ]
+            ],
+
+            init () {
+
+            },
         };
     </script>
 </body>
