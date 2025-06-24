@@ -177,6 +177,7 @@
             ],
 
             init () {
+                this.cardList = shuffle(this.cardList);
                 let i = 0;
                 for (let player of this.players) {
                     for (let j = 0; j < this.round; j++) {
