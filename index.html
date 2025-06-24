@@ -177,7 +177,10 @@
                     playerDisplay.classList.add("player");
                     const playerNameDisplay = document.createElement("h1");
                     playerNameDisplay.textContent = player.name;
+                    const playerCardDeckDisplay = document.createElement("div");
+                    playerCardDeckDisplay.classList.add("card-deck");
                     playerDisplay.appendChild(playerNameDisplay);
+                    playerDisplay.appendChild(playerCardDeckDisplay);
                     gameContainer.appendChild(playerDisplay);
                 }
             },
