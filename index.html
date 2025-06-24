@@ -25,7 +25,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* box-shadow: 1.5px 1.5px 1px; */
+            box-shadow: 1.5px 1.5px 1px;
             background-color: #fafafa;
             user-select: none;
             position: relative;
@@ -46,12 +46,75 @@
         .hidden {
             border: 2px dashed #888;
             box-sizing: border-box;
+            box-shadow: 0;
             font-weight: 500;
             color:#444;
+        }
+
+        #game-score table {
+            border: 1px solid black;
+            border-collapse: collapse;
+            user-select: none;
+        }
+
+        #game-score table tr td, #game-score table tr th {
+            padding: 5px;
+            width: 20px;
+            font-size: 12.5px;
+            border: 1px solid;
         }
     </style>
 </head>
 <body>
+    <section id="game-score">
+        <table>
+            <tr>
+                <th>Round</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>Score</th>
+            </tr>
+            <tr>
+                <td>Andy</td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Bob</td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Charles</td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Derek</td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td class="round-status"></td>
+                <td></td>
+            </tr>
+        </table>
+    </section>
     <section id="game-container">
         <div class="player">
             <h1>Andy</h1>
@@ -119,7 +182,8 @@
             players: [
                 new Player("Andy", "User", "User"),
                 new Player("Bob", "Random", "Random"),
-                new Player("Charles", "Random", "Random")
+                new Player("Charles", "Random", "Random"),
+                new Player("Derek", "Random", "Random")
             ],
             cardList: [
                 new Card("♦️", "A"),
