@@ -148,6 +148,13 @@
         </div>
     </section>
     <script>
+        const GamePhase = Object.freeze({
+            Deal: "Deal",
+            Predict: "Predict",
+            Play: "Play",
+            Score: "Score"
+        });
+
         class Card {
             constructor (suit, rank) {
                 this.suit = suit;
@@ -180,7 +187,7 @@
             round: 5,
             leadIndex: 0,
             leadSuit: null,
-            phase: null,
+            phase: GamePhase.Deal,
             players: [
                 new Player("Andy", "User", "User"),
                 new Player("Bob", "Random", "Random"),
