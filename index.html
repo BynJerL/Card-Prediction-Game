@@ -155,6 +155,23 @@
             Score: "Score"
         });
 
+        const PredictStrategy = Object.freeze({
+            User: "User",
+            Random: "Random",
+            Suit: "Suit",
+            Rank: "Rank",
+            RankAndSuit: "Rank and Suit",
+            RankOrSuit: "Rank or Suit"
+        });
+
+        const PlayingStrategy = Object.freeze({
+            User: "User",
+            Random: "Random",
+            LeadSuit: "Lead Suit",
+            Aggresive: "Aggresive",
+            MiniLoss: "Minimize Losses"
+        });
+
         class Card {
             constructor (suit, rank) {
                 this.suit = suit;
