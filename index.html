@@ -259,10 +259,10 @@
                 headerRow.appendChild(lastHeaderColumn);
                 scoreTable.appendChild(headerRow);
                 gameScore.appendChild(scoreTable);
-                let i = 0;
+                let cardCounter = 0;
                 for (let player of this.players) {
                     for (let j = 0; j < this.round; j++) {
-                        player.deck.push(this.cardList[i++]);
+                        player.deck.push(this.cardList[cardCounter++]);
                     }
                 }
                 gameContainer.innerHTML= "";
