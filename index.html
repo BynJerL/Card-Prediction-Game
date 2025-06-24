@@ -99,6 +99,7 @@
             return array;
         }
 
+        const gameContainer = document.getElementById("game-container");
         const GameManager = {
             round: 5,
             leadIndex: 0,
@@ -169,6 +170,15 @@
                     for (let j = 0; j < this.round; j++) {
                         player.deck.push(this.cardList[i++]);
                     }
+                }
+                gameContainer.innerHTML= "";
+                for (let player of this.players) {
+                    const playerDisplay = document.createElement("div");
+                    playerDisplay.classList.add("player");
+                    const playerNameDisplay = document.createElement("h1");
+                    playerNameDisplay.textContent = player.name;
+                    playerDisplay.appendChild(playerNameDisplay);
+                    gameContainer.appendChild(playerDisplay);
                 }
             },
         };
