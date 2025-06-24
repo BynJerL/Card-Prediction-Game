@@ -261,6 +261,7 @@
                 scoreTable.appendChild(headerRow);
                 for (let player of this.players) {
                     const scoreRow = document.createElement("tr");
+                    scoreRow.classList.add("player-score");
                     const firstColumn = document.createElement("td");
                     firstColumn.textContent = player.name;
                     scoreRow.appendChild(firstColumn);
@@ -270,7 +271,7 @@
                         scoreRow.appendChild(roundStatus);
                     }
                     const lastColumn = document.createElement("td");
-                    lastColumn.classList.add("player-score");
+                    lastColumn.classList.add("final-score");
                     scoreRow.appendChild(lastColumn);
                     scoreTable.appendChild(scoreRow);
                 }
