@@ -199,6 +199,7 @@
             user-select: none;
             position: fixed;
             z-index: 1000;
+            display: none;
         }
 
         #score-popup-content {
@@ -251,7 +252,7 @@
 </head>
 <body>
     <section id="game-items">
-        <div class="score-table left-menu" title="Score Table">📰</div>
+        <div class="left-menu" id="score-table-button" title="Score Table">📰</div>
         <div class="log-check left-menu" title="Log">ℹ️</div>
         <div class="instruction left-menu" title="How to Play">📜</div>
         <div class="hamburger-menu" title="More Menu">Menu</div>
@@ -423,6 +424,8 @@
 
         const gameBoard = document.getElementById("game-board");
         const gameScore = document.getElementById("game-score");
+        const scorePopupOverlay = document.getElementById("score-popup-overlay");
+        const scoreButtonButton = document.getElementById("score-table-button");
         const GameManager = {
             round: 5,
             leadIndex: 0,
@@ -559,6 +562,16 @@
                 // }
             },
         };
+
+        scoreButtonButton.onclick = function() {
+            if (scorePopupOverlay.style.display === "block") {
+                scorePopupOverlay.style.display = "none";
+                scoreButtonButton.style.backgroundColor = "#555";
+            } else {
+                scorePopupOverlay.style.display = "block";
+                scoreButtonButton.style.backgroundColor = "#888";
+            }
+        }
 
         GameManager.init();
     </script>
