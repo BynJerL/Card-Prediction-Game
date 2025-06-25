@@ -196,19 +196,16 @@
 
         #score-popup-overlay {
             width: 300px;
-            height: 300px;
             user-select: none;
             position: relative;
         }
 
         #score-table {
             width: 100%;
-            position: absolute;
-            top: 32px;
             font-size: 11px;
             font-weight: 500;
             text-align: center;
-            border: 1px solid black;
+            border: 1px solid #444;
             border-collapse: collapse;
         }
         
@@ -216,11 +213,11 @@
             background-color: #444;
             color: #fafafa;
             height: 24px;
-            
         }
 
         #score-table tr td:first-child {
             text-align: left;
+            font-size: 12px;
             padding-left: 3px;
             width: 57px;
         }
@@ -256,8 +253,6 @@
     </section>
     <section id="score-popup-overlay">
         <div id="score-popup">
-            <button class="close-menu" title="Close">&Cross;</button>
-            <div class="menu-head">Score Table</div>
             <div id="score-popup-content">
                 <table id="score-table">
                     <tr>
