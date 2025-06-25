@@ -171,7 +171,7 @@
             box-shadow: 2px 2px 2px #222;
         }
 
-        .left-menu:hover {
+        .left-menu:hover, .left-menu-active {
             background-color: #888;
         }
 
@@ -566,10 +566,10 @@
         scoreButtonButton.onclick = function() {
             if (scorePopupOverlay.style.display === "block") {
                 scorePopupOverlay.style.display = "none";
-                scoreButtonButton.style.backgroundColor = "#555";
+                scoreButtonButton.classList.remove("left-menu-active");
             } else {
                 scorePopupOverlay.style.display = "block";
-                scoreButtonButton.style.backgroundColor = "#888";
+                scoreButtonButton.classList.add("left-menu-active");
             }
         }
 
