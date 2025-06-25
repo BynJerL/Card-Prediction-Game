@@ -419,7 +419,7 @@
         const scorePopupOverlay = document.getElementById("score-popup-overlay");
         const scoreButtonButton = document.getElementById("score-table-button");
         const GameManager = {
-            round: 5,
+            round: 6,
             leadIndex: 0,
             leadSuit: null,
             phase: GamePhase.Deal,
@@ -427,7 +427,9 @@
                 new Player("Andy", PredictStrategy.User, PlayingStrategy.User),
                 new Player("Bob", PredictStrategy.Random, PlayingStrategy.Random),
                 new Player("Charles", PredictStrategy.Random, PlayingStrategy.Random),
-                new Player("Derek", PredictStrategy.Random, PlayingStrategy.Random)
+                new Player("Derek", PredictStrategy.Random, PlayingStrategy.Random),
+                new Player("Edwin", PredictStrategy.Random, PlayingStrategy.Random),
+                new Player("Frank", PredictStrategy.Random, PlayingStrategy.Random)
             ],
             cardList: [
                 new Card("♦️", "A"),
@@ -548,6 +550,28 @@
                     cardDisplay.appendChild(cardRankDisplay);
                     cardDisplay.appendChild(cardSuitDisplay);
                     cardDeck.appendChild(cardDisplay);
+                }
+
+                gameBoard.innerHTML = "";
+                for (let player of this.players) {
+                    const playerCard = document.createElement("div");
+                    playerCard.classList.add("submitted-card");
+                    const playerNameDisplay = document.createElement("div");
+                    playerNameDisplay.classList.add("player-name");
+                    playerNameDisplay.textContent = player.name;
+                    const cardInner = document.createElement("div");
+                    cardInner.classList.add("card-inner");
+                    const frontSide = document.createElement("div");
+                    frontSide.classList.add("front-side");
+                    frontSide.textContent = "?";
+                    const backSide = document.createElement("div");
+                    backSide.classList.add("back-side");
+                    backSide.textContent = "None";
+                    cardInner.appendChild(frontSide);
+                    cardInner.appendChild(backSide);
+                    playerCard.appendChild(playerNameDisplay);
+                    playerCard.appendChild(cardInner);
+                    gameBoard.appendChild(playerCard);
                 }
 
                 // gameContainer.innerHTML= "";
