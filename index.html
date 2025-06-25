@@ -197,7 +197,12 @@
         #score-popup-overlay {
             width: 300px;
             user-select: none;
-            position: relative;
+            position: fixed;
+            z-index: 1000;
+        }
+
+        #score-popup-content {
+            background-color: #fafafa;
         }
 
         #score-table {
