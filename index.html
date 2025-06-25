@@ -196,11 +196,15 @@
 
         #score-popup-overlay {
             width: 300px;
+            height: 300px;
             user-select: none;
+            position: relative;
         }
 
         #score-table {
             width: 100%;
+            position: absolute;
+            top: 32px;
             font-size: 11px;
             font-weight: 500;
             text-align: center;
@@ -211,7 +215,7 @@
         #score-table tr:first-child {
             background-color: #444;
             color: #fafafa;
-            height: 20px;
+            height: 24px;
             
         }
 
@@ -222,21 +226,38 @@
         }
 
         #score-table tr td {
-            border: 1px solid #ccc;
+            border: 1px inset #ccc;
+        }
+
+        .close-menu {
+            font-size: 16px;
+            position: absolute;
+            right: 0;
+        }
+
+        .menu-head {
+            padding: 0 10px;
+            height: 24px;
+            font-size: 14px;
+            font-weight: 550;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            /* background-color: #888; */
         }
     </style>
 </head>
 <body>
     <section id="game-items">
-        <div class="score-table left-menu">📰</div>
-        <div class="log-check left-menu">ℹ️</div>
-        <div class="instruction left-menu">📜</div>
-        <div class="hamburger-menu">Menu</div>
+        <div class="score-table left-menu" title="Score Table">📰</div>
+        <div class="log-check left-menu" title="Log">ℹ️</div>
+        <div class="instruction left-menu" title="How to Play">📜</div>
+        <div class="hamburger-menu" title="More Menu">Menu</div>
     </section>
     <section id="score-popup-overlay">
         <div id="score-popup">
             <button class="close-menu" title="Close">&Cross;</button>
-            <div>Score Table</div>
+            <div class="menu-head">Score Table</div>
             <div id="score-popup-content">
                 <table id="score-table">
                     <tr>
