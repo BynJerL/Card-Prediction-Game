@@ -63,6 +63,57 @@
             font-size: 12.5px;
             border: 1px solid;
         }
+
+        .submitted-card {
+            width: 60px;
+            height: 80px;
+            margin-bottom: 20px;
+            perspective: 750px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .card-inner, .front-side, .back-side {
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        .card-inner {
+            position: relative;
+            transition: transform 0.75s;
+            transform-style: preserve-3d;
+        }
+
+        .submitted-card:hover .card-inner{
+            transform: rotateY(180deg);
+        }
+
+        .front-side, .back-side {
+            position: absolute;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .front-side {
+            background-color: darkslategrey;
+            font-size: 32px;
+            font-weight: 600;
+            color: #f0f0f0;
+            box-shadow: 2px 2px 1px #222;
+        }
+
+        .back-side {
+            background-color: #f0f0f0;
+            font-weight: 500;
+            transform: rotateY(180deg);
+            box-shadow: 2px 2px 1px #222;
+        }
     </style>
 </head>
 <body>
