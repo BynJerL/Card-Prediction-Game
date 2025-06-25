@@ -347,7 +347,7 @@
         </div>
     </section>
     <section id="game-action">
-        <div class="current-player-name">Andy</div>
+        <div class="current-player-name">Placeholder</div>
         <div class="card-deck">
             <div class="card hidden">?</div>
             <div class="card hidden">?</div>
@@ -414,6 +414,7 @@
         }
 
         const gameBoard = document.getElementById("game-board");
+        const gameAction = document.getElementById("game-action");
         const gameScoreTable = document.getElementById("score-table");
         const scorePopupOverlay = document.getElementById("score-popup-overlay");
         const scoreButtonButton = document.getElementById("score-table-button");
@@ -522,14 +523,32 @@
                     scoreRow.appendChild(lastColumn);
                     gameScoreTable.appendChild(scoreRow);
                 }
-                // gameScoreTable.appendChild(scoreTable);
 
-                // let cardCounter = 0;
-                // for (let player of this.players) {
-                //     for (let j = 0; j < this.round; j++) {
-                //         player.deck.push(this.cardList[cardCounter++]);
-                //     }
-                // }
+                let cardCounter = 0;
+                for (let player of this.players) {
+                    for (let j = 0; j < this.round; j++) {
+                        player.deck.push(this.cardList[cardCounter++]);
+                    }
+                }
+
+                const currentPlayerName = gameAction.querySelector(".current-player-name");
+                const cardDeck = gameAction.querySelector(".card-deck");
+                currentPlayerName.textContent = this.players[this.leadIndex].name;
+
+                cardDeck.innerHTML = "";
+                for (let card of this.players[this.leadIndex].deck) {
+                    const cardDisplay = document.createElement("div");
+                    cardDisplay.classList.add("card");
+                    const cardRankDisplay = document.createElement("div");
+                    cardRankDisplay.classList.add("rank");
+                    cardRankDisplay.textContent = card.rank;
+                    const cardSuitDisplay = document.createElement("div");
+                    cardSuitDisplay.classList.add("suit");
+                    cardSuitDisplay.textContent = card.suit;
+                    cardDisplay.appendChild(cardRankDisplay);
+                    cardDisplay.appendChild(cardSuitDisplay);
+                    cardDeck.appendChild(cardDisplay);
+                }
 
                 // gameContainer.innerHTML= "";
                 // for (let player of this.players) {
