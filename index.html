@@ -146,13 +146,58 @@
             font-weight: 500;
             margin-bottom: 10px;
         }
+
+        #game-items {
+            width: 300px;
+            height: 40px;
+            display: flex;
+            gap: 10px;
+            user-select: none;
+            align-items: center;
+            position: relative;
+        }
+
+        .left-menu {
+            font-size: 24px;
+            width: 36px;
+            height: 36px;
+            background-color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            box-shadow: 2px 2px 2px #222;
+        }
+
+        .left-menu:hover {
+            background-color: #888;
+        }
+
+        .hamburger-menu {
+            position: absolute;
+            right: 0;
+            width: 60px;
+            height: 36px;
+            display: flex;
+            background-color: #345;
+            color: #fafafa;
+            font-weight: 500;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 2px 2px 2px #222;
+            border-radius: 5px;
+        }
+
+        .hamburger-menu:hover {
+            background-color: #688;
+        }
     </style>
 </head>
 <body>
     <section id="game-items">
-        <div class="score-table">📰</div>
-        <div class="log-check">ℹ️</div>
-        <div class="instruction">📜</div>
+        <div class="score-table left-menu">📰</div>
+        <div class="log-check left-menu">ℹ️</div>
+        <div class="instruction left-menu">📜</div>
         <div class="hamburger-menu">Menu</div>
     </section>
     <section id="game-board">
