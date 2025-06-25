@@ -128,8 +128,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
+        }
+
+        #game-action {
+            width: 300px;
+            height: 150px;
+            background-color: #eee;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .current-player-name {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -165,8 +179,8 @@
             </div>
         </div>
     </section>
-    <section id="current-player">
-        <h1>Andy</h1>
+    <section id="game-action">
+        <div class="current-player-name">Andy</div>
         <div class="card-deck">
             <div class="card hidden">?</div>
             <div class="card hidden">?</div>
