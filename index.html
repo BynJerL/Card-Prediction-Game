@@ -193,6 +193,37 @@
         .hamburger-menu:hover {
             background-color: #688;
         }
+
+        #score-popup-overlay {
+            width: 300px;
+            user-select: none;
+        }
+
+        #score-table {
+            width: 100%;
+            font-size: 11px;
+            font-weight: 500;
+            text-align: center;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        
+        #score-table tr:first-child {
+            background-color: #444;
+            color: #fafafa;
+            height: 20px;
+            
+        }
+
+        #score-table tr td:first-child {
+            text-align: left;
+            padding-left: 3px;
+            width: 57px;
+        }
+
+        #score-table tr td {
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
@@ -201,6 +232,76 @@
         <div class="log-check left-menu">ℹ️</div>
         <div class="instruction left-menu">📜</div>
         <div class="hamburger-menu">Menu</div>
+    </section>
+    <section id="score-popup-overlay">
+        <div id="score-popup">
+            <button class="close-menu" title="Close">&Cross;</button>
+            <div>Score Table</div>
+            <div id="score-popup-content">
+                <table id="score-table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Pred</th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                        <th>Score</th>
+                    </tr>
+                    <tr>
+                        <td>Andy</td>
+                        <td>n/a</td>
+                        <td>9<br>♥️</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                    </tr>
+                    <tr>
+                        <td>Bob</td>
+                        <td>n/a</td>
+                        <td>9<br>♥️</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                    </tr>
+                    <tr>
+                        <td>Charles</td>
+                        <td>n/a</td>
+                        <td>9<br>♥️</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                    </tr>
+                    <tr>
+                        <td>Derek</td>
+                        <td>n/a</td>
+                        <td>9<br>♥️</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                        <td>n/a</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </section>
     <section id="game-board">
         <div class="submitted-card">
