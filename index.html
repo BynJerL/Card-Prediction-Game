@@ -660,23 +660,38 @@
                         if (player.playingStrategy === PlayingStrategy.User) {
                             cardDeck.innerHTML = "";
                             await new Promise(resolveUser => {
+                                const cardElements = [];
+                                const handlers = [];
+
                                 player.deck.forEach((card, index) => {
                                     const cardDisplay = document.createElement("div");
                                     cardDisplay.classList.add("card");
                                     cardDisplay.innerHTML = `<div class="rank">${card.rank}</div><div class="suit">${card.suit}</div>`;
                                     cardDisplay.style.cursor = "pointer";
+
+                                    // Bind with correct index and handler
                                     const cardDisplayHandler = () => {
+                                        // Only proceed if playerCard is still null
+                                        if (playerCard !== null) return;
+
                                         playerCard = player.deck.splice(index, 1)[0];
-                                        playerIdx = this.players.indexOf(player);
+
+                                        const playerIdx = GameManager.players.indexOf(player);
                                         const cardOnBoard = gameBoard.querySelectorAll(".submitted-card")[playerIdx];
                                         const cardContent = cardOnBoard.querySelector(".card-inner .back-side");
                                         cardContent.innerHTML = `<div class="submitted-card-rank">${playerCard.rank}</div><div class="submitted-card-suit">${playerCard.suit}</div>`;
                                         cardOnBoard.classList.add("revealed");
-                                        document.querySelectorAll(".card").forEach(_card => {
-                                            cardDisplay.removeEventListener("click", cardDisplayHandler);
+
+                                        // Disable all handlers immediately
+                                        handlers.forEach(({ el, handler }) => {
+                                            el.removeEventListener("click", handler);
+                                            el.style.cursor = "default";
                                         });
+
                                         resolveUser();
-                                    }
+                                    };
+
+                                    handlers.push({ el: cardDisplay, handler: cardDisplayHandler });
                                     cardDisplay.addEventListener("click", cardDisplayHandler);
                                     cardDeck.appendChild(cardDisplay);
                                 });
