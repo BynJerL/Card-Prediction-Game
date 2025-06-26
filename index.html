@@ -355,9 +355,9 @@
             <div class="card hidden">?</div>
             <div class="card hidden">?</div>
         </div>
-        <div>How many win do you expect?</div>
+        <div class="text-bar">Placeholder text</div>
         <input type="number" name="win-prediction" id="win-prediction" max="6">
-        <button>Confirm</button>
+        <button class="confirm-button">Confirm</button>
     </section>
 
     <script>
@@ -488,6 +488,7 @@
 
             init () {
                 this.cardList = shuffle(this.cardList);
+                // this.players = shuffle(this.players);
 
                 gameScoreTable.innerHTML = "";
                 const headerRow = document.createElement("tr");
@@ -573,33 +574,56 @@
                     playerCard.appendChild(cardInner);
                     gameBoard.appendChild(playerCard);
                 }
+                
+                this.phase = GamePhase.Predict;
+                this.askPrediction();
+            },
+            askPrediction: async () => {
+                for (let player of GameManager.players) {
+                    const currentPlayerName = gameAction.querySelector(".current-player-name");
+                    currentPlayerName.textContent = player.name;
+                    const cardDeck = gameAction.querySelector(".card-deck");
 
-                // gameContainer.innerHTML= "";
-                // for (let player of this.players) {
-                //     const playerDisplay = document.createElement("div");
-                //     playerDisplay.classList.add("player");
-                //     const playerNameDisplay = document.createElement("h1");
-                //     playerNameDisplay.textContent = player.name;
-                //     const playerCardDeckDisplay = document.createElement("div");
-                //     playerCardDeckDisplay.classList.add("card-deck");
-                //     for (let card of player.deck) {
-                //         const cardDisplay = document.createElement("div");
-                //         cardDisplay.classList.add("card");
-                //         const cardRankDisplay = document.createElement("div");
-                //         cardRankDisplay.classList.add("rank");
-                //         cardRankDisplay.textContent = card.rank;
-                //         const cardSuitDisplay = document.createElement("div");
-                //         cardSuitDisplay.classList.add("suit");
-                //         cardSuitDisplay.textContent = card.suit;
-                //         cardDisplay.appendChild(cardRankDisplay);
-                //         cardDisplay.appendChild(cardSuitDisplay);
-                //         playerCardDeckDisplay.appendChild(cardDisplay);
-                //     }
-                //     playerDisplay.appendChild(playerNameDisplay);
-                //     playerDisplay.appendChild(playerCardDeckDisplay);
-                //     gameContainer.appendChild(playerDisplay);
-                // }
+                    if (player.predictStrategy === PredictStrategy.User &&
+                        player.playingStrategy === PlayingStrategy.User
+                    ) {
+                        cardDeck.innerHTML = "";
+                        for (let card of player.deck) {
+                            const cardDisplay = document.createElement("div");
+                            cardDisplay.classList.add("card");
+                            const cardRankDisplay = document.createElement("div");
+                            cardRankDisplay.classList.add("rank");
+                            cardRankDisplay.textContent = card.rank;
+                            const cardSuitDisplay = document.createElement("div");
+                            cardSuitDisplay.classList.add("suit");
+                            cardSuitDisplay.textContent = card.suit;
+                            cardDisplay.appendChild(cardRankDisplay);
+                            cardDisplay.appendChild(cardSuitDisplay);
+                            cardDeck.appendChild(cardDisplay);
+                        }
+                        const textBar = document.querySelector("#game-action .text-bar");
+                        const winPredictionInput = document.getElementById("win-prediction");
+                        const confirmButton = document.querySelector(".confirm-button");
+                        textBar.innerHTML = "How many win do you expect?";
+                        winPredictionInput.value = "";
+                        winPredictionInput.disabled = false;
+                        confirmButton.disabled = false;
 
+                        await new Promise(resolve => {
+                            const handler = () => {
+                                let predictionValue = parseInt(winPredictionInput.value);
+                                if (!isNaN(predictionValue) && predictionValue >= 0 && predictionValue <= this.round) {
+                                    player.expectedWin = predictionValue;
+                                    confirmButton.removeEventListener("click", handler);
+                                    winPredictionInput.disabled = true;
+                                    confirmButton.disabled = true;
+                                    resolve();
+                                }
+                            }
+                            confirmButton.addEventListener("click", handler);
+                        });
+                    }
+                }
             },
         };
 
