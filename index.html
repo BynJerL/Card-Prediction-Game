@@ -606,9 +606,9 @@
                 }
                 
                 this.phase = GamePhase.Predict;
-                this.askPrediction();
+                this.makePrediction();
             },
-            askPrediction: async () => {
+            makePrediction: async () => {
                 for (let player of GameManager.players) {
                     const currentPlayerName = gameAction.querySelector(".current-player-name");
                     currentPlayerName.textContent = player.name;
@@ -707,6 +707,8 @@
                             }
                         );
                     }
+
+                    gameScoreTable.querySelectorAll("tr")[++GameManager.currentIndex].querySelectorAll("td")[1].textContent = player.expectedWin;
                 }
             },
         };
