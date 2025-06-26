@@ -107,7 +107,6 @@ const GameManager = {
             winnerIndex: null
         }
         this.phase = GamePhase.Deal;
-        this.cards = shuffle(generateCards());
 
         // Will be implemented in the future
         // this.players = shuffle(this.players);
@@ -115,13 +114,45 @@ const GameManager = {
         this.run();
     },
 
-    getTurnOrder(startIndex) {
+    getTurnOrderFrom(startIndex) {
         return this.players.slice(startIndex).concat(this.players.slice(0, startIndex));
+    },
+
+    dealCards () {
+        this.cards = shuffle(generateCards());
+        const totalPlayers = this.players.length;
+        const cardsPerPlayer = this.totalRound;
+
+        for (const player of this.players) {
+            player.deck = [];
+        }
+
+        // Round robin
+        for (let r = 0; r < cardsPerPlayer; r++) {
+            for (let p = 0; p < totalPlayers; p++) {
+                this.players[p].deck.push(this.cards.pop());
+            }
+        }
+
+        this.roundState = {
+            round: 0,
+            turn: 0,
+            leadIndex: 0,
+            leadSuit: null,
+            playedCards: [],
+            turnOrder: this.getTurnOrderFrom(0),
+            winnerIndex: null
+        };
+
+        this.phase = GamePhase.Predict;
+        this.run();
     },
 
     run () {
         switch (this.phase) {
-            case GamePhase.Deal: break;
+            case GamePhase.Deal: 
+                this.dealCards(); 
+                break;
             case GamePhase.Predict: break;
             case GamePhase.Predict: break;
             case GamePhase.Score: break;
@@ -129,3 +160,5 @@ const GameManager = {
         }
     }
 }
+
+GameManager.init();
