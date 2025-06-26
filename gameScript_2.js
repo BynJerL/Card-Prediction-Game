@@ -97,13 +97,15 @@ const GameManager = {
     /** @param {number} totalRound*/
     init (totalRound = 6) {
         this.totalRound = totalRound;
-        this.roundState.round = 0;
-        this.roundState.turn = 0;
-        this.roundState.leadIndex = 0;
-        this.roundState.leadSuit = null;
-        this.roundState.playedCards = [];
-        this.roundState.turnOrder = [];
-        this.roundState.winnerIndex = null;
+        this.roundState = {
+            round: 0,
+            turn: 0,
+            leadIndex: 0,
+            leadSuit: null,
+            playedCards: [],
+            turnOrder: [],
+            winnerIndex: null
+        }
         this.phase = GamePhase.Deal;
         this.cards = shuffle(generateCards());
 
