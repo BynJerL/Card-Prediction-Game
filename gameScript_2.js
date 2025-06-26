@@ -77,6 +77,7 @@ const GameManager = {
         round: 0,
         turn: 0,
         leadIndex: 0,
+        turnIndex: 0,
         leadSuit: null,
         playedCards: [],        // Track the card
         turnOrder: [],
@@ -101,6 +102,7 @@ const GameManager = {
             round: 0,
             turn: 0,
             leadIndex: 0,
+            turnIndex: 0,
             leadSuit: null,
             playedCards: [],
             turnOrder: [],
@@ -138,6 +140,7 @@ const GameManager = {
             round: 0,
             turn: 0,
             leadIndex: 0,
+            turnIndex: 0,
             leadSuit: null,
             playedCards: [],
             turnOrder: this.getTurnOrderFrom(0),
@@ -148,17 +151,53 @@ const GameManager = {
         this.run();
     },
 
+    handlePredictionPhase () {
+        const player = this.players[this.roundState.turnIndex];
+        
+        // Placeholder for displaying the player cards/UI Handler
+        console.log(`${player.name} Cards:`);
+        for (const card of player.deck) {
+            console.log(card);
+        }
+
+        if (player.predictStrategy === PredictStrategy.User) {
+            // Show the deck
+            // Demand user input
+        } else {
+            // Show the deck, but hide the card
+            // AI doing some calculation for the win expectation
+        }
+
+        // Add event listener to the actionButton (will be handled by UI Manager).
+        // Record the prediction to the table.
+        // If the player click the action button, the accessment will be shifted to other players.
+        // If all player have made prediction, the game phase will be moved to the playing phase.
+        // Maybe add some delay on the button disable.
+    },
+
+    handlePlayingPhase () {
+        // leadIndex and turnIndex will be decided here
+
+        const player = this.players[this.roundState.turnIndex];
+
+        // First player determine the leadSuit
+    },
+
     run () {
         switch (this.phase) {
             case GamePhase.Deal: 
                 this.dealCards(); 
                 break;
-            case GamePhase.Predict: break;
-            case GamePhase.Predict: break;
+            case GamePhase.Predict: 
+                this.handlePredictionPhase();
+                break;
+            case GamePhase.Play: break;
             case GamePhase.Score: break;
             case GamePhase.End: break;
         }
     }
 }
+
+const UIManager = {};
 
 GameManager.init();
