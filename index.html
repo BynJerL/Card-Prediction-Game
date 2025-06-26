@@ -67,7 +67,7 @@
             transform-style: preserve-3d;
         }
 
-        .submitted-card:hover .card-inner{
+        .submitted-card.revealed .card-inner{
             transform: rotateY(180deg);
         }
 
@@ -95,6 +95,19 @@
             font-weight: 500;
             transform: rotateY(180deg);
             box-shadow: 2px 2px 1px #222;
+        }
+
+        .submitted-card-rank {
+            position: absolute;
+            top: 6px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .submitted-card-suit {
+            position: absolute;
+            font-size: 28px;
+            bottom: 6px;
         }
 
         .player-name {
@@ -281,101 +294,11 @@
     <section id="score-popup-overlay">
         <div id="score-popup">
             <div id="score-popup-content">
-                <table id="score-table">
-                    <tr>
-                        <th>Name</th>
-                        <th>Pred</th>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                        <th>5</th>
-                        <th>6</th>
-                        <th>7</th>
-                        <th>Score</th>
-                    </tr>
-                    <tr>
-                        <td>Andy</td>
-                        <td>n/a</td>
-                        <td>9<br>♥️</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                    </tr>
-                    <tr>
-                        <td>Bob</td>
-                        <td>n/a</td>
-                        <td>9<br>♥️</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                    </tr>
-                    <tr>
-                        <td>Charles</td>
-                        <td>n/a</td>
-                        <td>9<br>♥️</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                    </tr>
-                    <tr>
-                        <td>Derek</td>
-                        <td>n/a</td>
-                        <td>9<br>♥️</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                        <td>n/a</td>
-                    </tr>
-                </table>
+                <table id="score-table"></table>
             </div>
         </div>
     </section>
-    <section id="game-board">
-        <div class="submitted-card">
-            <div class="player-name">Andy</div>
-            <div class="card-inner">
-                <div class="front-side">?</div>
-                <div class="back-side">None</div>
-            </div>
-        </div>
-        <div class="submitted-card">
-            <div class="player-name">Bob</div>
-            <div class="card-inner">
-                <div class="front-side">?</div>
-                <div class="back-side">None</div>
-            </div>
-        </div>
-        <div class="submitted-card">
-            <div class="player-name">Charles</div>
-            <div class="card-inner">
-                <div class="front-side">?</div>
-                <div class="back-side">None</div>
-            </div>
-        </div>
-        <div class="submitted-card">
-            <div class="player-name">Derek</div>
-            <div class="card-inner">
-                <div class="front-side">?</div>
-                <div class="back-side">None</div>
-            </div>
-        </div>
-    </section>
+    <section id="game-board"></section>
     <section id="game-action">
         <div class="current-player-name">Placeholder</div>
         <div class="card-deck">
@@ -429,6 +352,7 @@
                 this.deck = [];
                 this.expectedWin = null;
                 this.totalWin = 0;
+                this.roundScore = 0;
                 this.score = 0;
                 this.predictStrategy = predictStrategy;
                 this.playingStrategy = playingStrategy;
@@ -449,7 +373,7 @@
         const scorePopupOverlay = document.getElementById("score-popup-overlay");
         const scoreButtonButton = document.getElementById("score-table-button");
         const GameManager = {
-            round: 6,
+            totalRound: 6,
             leadIndex: 0,
             leadSuit: null,
             currentIndex: 0,
@@ -519,7 +443,7 @@
 
             init () {
                 this.cardList = shuffle(this.cardList);
-                this.players = shuffle(this.players);
+                // this.players = shuffle(this.players);
 
                 gameScoreTable.innerHTML = "";
                 const headerRow = document.createElement("tr");
@@ -529,7 +453,7 @@
                 secondHeaderColumn.textContent = "Pred"
                 headerRow.appendChild(firstHeaderColumn);
                 headerRow.appendChild(secondHeaderColumn);
-                for (let r = 1; r <= this.round; r++) {
+                for (let r = 1; r <= this.totalRound; r++) {
                     const roundHeadColumn = document.createElement("th");
                     roundHeadColumn.textContent = r;
                     headerRow.appendChild(roundHeadColumn);
@@ -547,7 +471,7 @@
                     scoreRow.appendChild(firstColumn);
                     const secondColumn = document.createElement("td");
                     scoreRow.appendChild(secondColumn);
-                    for (let r = 0; r < this.round; r++) {
+                    for (let r = 0; r < this.totalRound; r++) {
                         const roundStatus = document.createElement("td");
                         roundStatus.classList.add("round-status");
                         scoreRow.appendChild(roundStatus);
@@ -560,7 +484,7 @@
 
                 let cardCounter = 0;
                 for (let player of this.players) {
-                    for (let j = 0; j < this.round; j++) {
+                    for (let j = 0; j < this.totalRound; j++) {
                         player.deck.push(this.cardList[cardCounter++]);
                     }
                 }
@@ -638,15 +562,15 @@
                         winPredictionInput.disabled = false;
                         winPredictionInput.style.display = "inline-block";
                         confirmButton.disabled = false;
-                        confirmButton.textContent = "Click";
+                        confirmButton.textContent = "Confirm";
 
                         await new Promise(resolve => {
                             const handler = () => {
                                 let predictionValue = parseInt(winPredictionInput.value, 10);
 
                                 if (isNaN(predictionValue)) {
-                                    console.log(`Input should be number between 0 and ${GameManager.round}!`);
-                                    alert(`Input should be number between 0 and ${GameManager.round}!`);
+                                    console.log(`Input should be number between 0 and ${GameManager.totalRound}!`);
+                                    alert(`Input should be number between 0 and ${GameManager.totalRound}!`);
                                     return;
                                 }
 
@@ -656,9 +580,9 @@
                                     return;
                                 }
 
-                                if (predictionValue > GameManager.round) {
-                                    console.log(`Input should not more than ${GameManager.round}.`);
-                                    alert(`Input should not more than ${GameManager.round}.`);
+                                if (predictionValue > GameManager.totalRound) {
+                                    console.log(`Input should not more than ${GameManager.totalRound}.`);
+                                    alert(`Input should not more than ${GameManager.totalRound}.`);
                                     return;
                                 }
 
@@ -685,9 +609,10 @@
                         const confirmButton = document.querySelector(".confirm-button");
                         const textBar = document.querySelector("#game-action .text-bar");
                         confirmButton.disabled = false;
+                        confirmButton.textContent = "Next";
                         switch (player.predictStrategy) {
                             case PredictStrategy.Random: 
-                                confidence = Math.floor(Math.random() * (GameManager.round + 1));
+                                confidence = Math.floor(Math.random() * (GameManager.totalRound + 1));
                                 break;
                             default:
                                 break;
@@ -711,10 +636,69 @@
 
                     gameScoreTable.querySelectorAll("tr")[++GameManager.currentIndex].querySelectorAll("td")[1].textContent = player.expectedWin;
                 }
+                GameManager.phase = GamePhase.Play;
+                GameManager.play();
             },
 
-            play () {
-                // 
+            play: async function () {
+                for (let round = 0; round <= this.totalRound; round++) {
+                    let playedCards = [];
+                    let turnOrder = [];
+
+                    for (let i = 0; i < this.players.length; i++) {
+                        turnOrder.push(this.players[(this.leadIndex + i) % this.players.length]);
+                    }
+
+                    for (let player of turnOrder) {
+                        const cardDeck = document.querySelector(".card-deck");
+                        const currentPlayerName = document.querySelector(".current-player-name");
+                        const confirmButton = document.querySelector(".confirm-button")
+                        currentPlayerName.textContent = player.name;
+
+                        let playerCard = null;
+
+                        if (player.playingStrategy === PlayingStrategy.User) {
+                            cardDeck.innerHTML = "";
+                            await new Promise(resolveUser => {
+                                player.deck.forEach((card, index) => {
+                                    const cardDisplay = document.createElement("div");
+                                    cardDisplay.classList.add("card");
+                                    cardDisplay.innerHTML = `<div class="rank">${card.rank}</div><div class="suit">${card.suit}</div>`;
+                                    cardDisplay.style.cursor = "pointer";
+                                    const cardDisplayHandler = () => {
+                                        playerCard = player.deck.splice(index, 1)[0];
+                                        playerIdx = this.players.indexOf(player);
+                                        const cardOnBoard = gameBoard.querySelectorAll(".submitted-card")[playerIdx];
+                                        const cardContent = cardOnBoard.querySelector(".card-inner .back-side");
+                                        cardContent.innerHTML = `<div class="submitted-card-rank">${playerCard.rank}</div><div class="submitted-card-suit">${playerCard.suit}</div>`;
+                                        cardOnBoard.classList.add("revealed");
+                                        document.querySelectorAll(".card").forEach(_card => {
+                                            cardDisplay.removeEventListener("click", cardDisplayHandler);
+                                        });
+                                        resolveUser();
+                                    }
+                                    cardDisplay.addEventListener("click", cardDisplayHandler);
+                                    cardDeck.appendChild(cardDisplay);
+                                });
+                            });
+                        } else {
+                            for (let card of player.deck) {
+                                const cardDisplay = document.createElement("div");
+                                cardDisplay.classList.add("card", "hidden");
+                                cardDisplay.textContent = "?";
+                                cardDeck.appendChild(cardDisplay);
+                            }
+
+                            switch (player.playingStrategy) {
+                                case PlayingStrategy.Random:
+                                    playedCards = player.deck.splice(Math.floor(Math.random() * player.deck.length), 1);
+                                    break;
+                                default: 
+                                    break;
+                            }
+                        }
+                    }
+                }
             }
         };
 
