@@ -90,9 +90,17 @@
 
     <script>
         const revealButton = document.querySelector(".reveal-button");
+        const card = document.querySelector(".card");
 
         revealButton.addEventListener("click", () => {
-            const card = document.querySelector(".card");
+            if (!card.classList.contains("revealed")) {
+                card.classList.add("revealed");
+            } else {
+                card.classList.remove("revealed");
+            }
+        });
+
+        card.addEventListener("click", () => {
             if (!card.classList.contains("revealed")) {
                 card.classList.add("revealed");
             } else {
