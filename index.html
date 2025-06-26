@@ -686,6 +686,7 @@
                                         handlers.forEach(({ el, handler }) => {
                                             el.removeEventListener("click", handler);
                                             el.style.cursor = "default";
+                                            el.disabled = true;
                                         });
 
                                         resolveUser();
