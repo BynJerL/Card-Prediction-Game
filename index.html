@@ -612,15 +612,12 @@
                         await new Promise(resolve => {
                             const handler = () => {
                                 let predictionValue = parseInt(winPredictionInput.value, 10);
-                                console.log(predictionValue);
-                                console.log(this.round);
-                                console.log(!isNaN(predictionValue) && predictionValue >= 0 && predictionValue <= 6);
                                 if (!isNaN(predictionValue) && 
                                     predictionValue >= 0 && 
                                     predictionValue <= GameManager.round
                                 ) {
                                     player.expectedWin = predictionValue;
-                                    // confirmButton.removeEventListener("click", handler);
+                                    confirmButton.removeEventListener("click", handler);
                                     winPredictionInput.disabled = true;
                                     confirmButton.disabled = true;
                                     console.log(player.expectedWin);
@@ -632,7 +629,28 @@
                             confirmButton.addEventListener("click", handler);
                         });
                     } else {
-                        // 
+                        let confidence = 0;
+                        const confirmButton = document.querySelector(".confirm-button");
+                        confirmButton.disabled = false;
+                        switch (player.predictStrategy) {
+                            case PredictStrategy.Random: 
+                                confidence = Math.floor(Math.random() * (GameManager.round + 1));
+                                break;
+                            default:
+                                break;
+                        }
+
+                        player.expectedWin = confidence;
+                        await new Promise (
+                            resolve => {
+                                const handler = () => {
+                                    console.log("Confirm");
+                                    confirmButton.removeEventListener("click", handler);
+                                    resolve();
+                                };
+                                confirmButton.addEventListener("click", handler);
+                            }
+                        );
                     }
                 }
             },
