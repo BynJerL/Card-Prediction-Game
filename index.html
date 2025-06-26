@@ -672,8 +672,17 @@
                             confirmButton.addEventListener("click", handler);   
                         });
                     } else {
+                        cardDeck.innerHTML = "";
+                        for (let card of player.deck) {
+                            const cardDisplay = document.createElement("div");
+                            cardDisplay.classList.add("card", "hidden");
+                            cardDisplay.textContent = "?";
+                            cardDeck.appendChild(cardDisplay);
+                        }
+
                         let confidence = 0;
                         const confirmButton = document.querySelector(".confirm-button");
+                        const textBar = document.querySelector("#game-action .text-bar");
                         confirmButton.disabled = false;
                         switch (player.predictStrategy) {
                             case PredictStrategy.Random: 
@@ -685,7 +694,7 @@
 
                         player.expectedWin = confidence;
 
-
+                        textBar.textContent = `This player expect to win ${player.expectedWin} time(s)`;
 
                         await new Promise (
                             resolve => {
