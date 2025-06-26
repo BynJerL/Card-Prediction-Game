@@ -422,6 +422,7 @@
             round: 6,
             leadIndex: 0,
             leadSuit: null,
+            currentIndex: 0,
             phase: GamePhase.Deal,
             players: [
                 new Player("Andy", PredictStrategy.User, PlayingStrategy.User),
@@ -584,9 +585,7 @@
                     currentPlayerName.textContent = player.name;
                     const cardDeck = gameAction.querySelector(".card-deck");
 
-                    if (player.predictStrategy === PredictStrategy.User &&
-                        player.playingStrategy === PlayingStrategy.User
-                    ) {
+                    if (player.predictStrategy === PredictStrategy.User) {
                         cardDeck.innerHTML = "";
                         for (let card of player.deck) {
                             const cardDisplay = document.createElement("div");
@@ -608,20 +607,32 @@
                         winPredictionInput.value = "";
                         winPredictionInput.disabled = false;
                         confirmButton.disabled = false;
+                        confirmButton.textContent = "Click";
 
                         await new Promise(resolve => {
                             const handler = () => {
-                                let predictionValue = parseInt(winPredictionInput.value);
-                                if (!isNaN(predictionValue) && predictionValue >= 0 && predictionValue <= this.round) {
+                                let predictionValue = parseInt(winPredictionInput.value, 10);
+                                console.log(predictionValue);
+                                console.log(this.round);
+                                console.log(!isNaN(predictionValue) && predictionValue >= 0 && predictionValue <= 6);
+                                if (!isNaN(predictionValue) && 
+                                    predictionValue >= 0 && 
+                                    predictionValue <= GameManager.round
+                                ) {
                                     player.expectedWin = predictionValue;
-                                    confirmButton.removeEventListener("click", handler);
+                                    // confirmButton.removeEventListener("click", handler);
                                     winPredictionInput.disabled = true;
                                     confirmButton.disabled = true;
+                                    console.log(player.expectedWin);
                                     resolve();
+                                } else {
+                                    console.log("Invalid Input");
                                 }
                             }
                             confirmButton.addEventListener("click", handler);
                         });
+                    } else {
+                        // 
                     }
                 }
             },
