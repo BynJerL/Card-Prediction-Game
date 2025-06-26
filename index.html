@@ -261,6 +261,7 @@
         }
 
         #win-prediction {
+            display: none;
             position: absolute;
             left: 10px;
             bottom: 10px;
@@ -518,7 +519,7 @@
 
             init () {
                 this.cardList = shuffle(this.cardList);
-                // this.players = shuffle(this.players);
+                this.players = shuffle(this.players);
 
                 gameScoreTable.innerHTML = "";
                 const headerRow = document.createElement("tr");
