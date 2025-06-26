@@ -52,39 +52,66 @@ class Player {
     }
 }
 
-const cardList = [
-    new Card(CardSuit.Heart, CardRank.Ace),     new Card(CardSuit.Heart, CardRank.Two),     new Card(CardSuit.Heart, CardRank.Three),
-    new Card(CardSuit.Heart, CardRank.Four),    new Card(CardSuit.Heart, CardRank.Five),    new Card(CardSuit.Heart, CardRank.Six),
-    new Card(CardSuit.Heart, CardRank.Seven),   new Card(CardSuit.Heart, CardRank.Eight),   new Card(CardSuit.Heart, CardRank.Nine), 
-    new Card(CardSuit.Heart, CardRank.Ten),     new Card(CardSuit.Heart, CardRank.Jack),    new Card(CardSuit.Heart, CardRank.Queen), 
-    new Card(CardSuit.Heart, CardRank.King),    new Card(CardSuit.Diamond, CardRank.Ace),   new Card(CardSuit.Diamond, CardRank.Two), 
-    new Card(CardSuit.Diamond, CardRank.Three), new Card(CardSuit.Diamond, CardRank.Four),  new Card(CardSuit.Diamond, CardRank.Five),
-    new Card(CardSuit.Diamond, CardRank.Six),   new Card(CardSuit.Diamond, CardRank.Seven), new Card(CardSuit.Diamond, CardRank.Eight), 
-    new Card(CardSuit.Diamond, CardRank.Nine),  new Card(CardSuit.Diamond, CardRank.Ten),   new Card(CardSuit.Diamond, CardRank.Jack), 
-    new Card(CardSuit.Diamond, CardRank.Queen), new Card(CardSuit.Diamond, CardRank.King),  new Card(CardSuit.Club, CardRank.Ace), 
-    new Card(CardSuit.Club, CardRank.Two),      new Card(CardSuit.Club, CardRank.Three),    new Card(CardSuit.Club, CardRank.Four),
-    new Card(CardSuit.Club, CardRank.Five),     new Card(CardSuit.Club, CardRank.Six),      new Card(CardSuit.Club, CardRank.Seven), 
-    new Card(CardSuit.Club, CardRank.Eight),    new Card(CardSuit.Club, CardRank.Nine),     new Card(CardSuit.Club, CardRank.Ten), 
-    new Card(CardSuit.Club, CardRank.Jack),     new Card(CardSuit.Club, CardRank.Queen),    new Card(CardSuit.Club, CardRank.King), 
-    new Card(CardSuit.Spade, CardRank.Ace),     new Card(CardSuit.Spade, CardRank.Two),     new Card(CardSuit.Spade, CardRank.Three),
-    new Card(CardSuit.Spade, CardRank.Four),    new Card(CardSuit.Spade, CardRank.Five),    new Card(CardSuit.Spade, CardRank.Six), 
-    new Card(CardSuit.Spade, CardRank.Seven),   new Card(CardSuit.Spade, CardRank.Eight),   new Card(CardSuit.Spade, CardRank.Nine), 
-    new Card(CardSuit.Spade, CardRank.Ten),     new Card(CardSuit.Spade, CardRank.Jack),    new Card(CardSuit.Spade, CardRank.Queen), 
-    new Card(CardSuit.Spade, CardRank.King)
-];
+const generateCards = function () {
+    const deck = [];
+    const suits = Object.values(CardSuit);
+    const ranks = Object.values(CardRank);
+    for (const suit of suits) {
+        for (const rank of ranks) {
+            deck.push(new Card(suit, rank));
+        }
+    }
+    return deck;
+}
+
+const shuffle = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
 const GameManager = {
+    roundState: {
+        round: 0,
+        turn: 0,
+        leadIndex: 0,
+        leadSuit: null,
+        playedCards: [],        // Track the card
+        turnOrder: [],
+        winnerIndex: null
+    },
     totalRound: null,
-    leadIndex: 0,
-    leadSuit: null,
     phase: null,
     cards: [],
+    players: [
+        new Player("Andy", PredictStrategy.User, PlayingStrategy.User),
+        new Player("Bob", PredictStrategy.Random, PlayingStrategy.Random),
+        new Player("Charles", PredictStrategy.Random, PlayingStrategy.Random),
+        new Player("Dave", PredictStrategy.Random, PlayingStrategy.Random),
+        new Player("Edwin", PredictStrategy.Random, PlayingStrategy.Random),
+        new Player("Frank", PredictStrategy.Random, PlayingStrategy.Random)
+    ],
 
     /** @param {number} totalRound*/
     init (totalRound = 6) {
         this.totalRound = totalRound;
-        this.leadIndex = 0;
-        this.leadSuit = null;
+        this.roundState.round = 0;
+        this.roundState.turn = 0;
+        this.roundState.leadIndex = 0;
+        this.roundState.leadSuit = null;
+        this.roundState.playedCards = [];
+        this.roundState.turnOrder = [];
+        this.roundState.winnerIndex = null;
         this.phase = GamePhase.Deal;
+        this.cards = shuffle(generateCards());
+
+        // Will be implemented in the future
+        // this.players = shuffle(this.players);
+    },
+
+    getTurnOrder(startIndex) {
+        // 
     }
 }
