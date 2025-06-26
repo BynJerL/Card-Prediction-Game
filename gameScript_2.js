@@ -3,7 +3,7 @@ const gameBoard = document.getElementById("game-board");
 const gameAction = document.getElementById("game-action");
 
 const GamePhase = Object.freeze({
-    Deal: "Deal", Predict: "Predict", Play: "Play", Score: "Score"
+    Deal: "Deal", Predict: "Predict", Play: "Play", Score: "Score", End: "End"
 });
 
 const PredictStrategy = Object.freeze({
@@ -111,11 +111,21 @@ const GameManager = {
 
         // Will be implemented in the future
         // this.players = shuffle(this.players);
+
+        this.run();
     },
 
     getTurnOrder(startIndex) {
         return this.players.slice(startIndex).concat(this.players.slice(0, startIndex));
     },
 
-    run () {}
+    run () {
+        switch (this.phase) {
+            case GamePhase.Deal: break;
+            case GamePhase.Predict: break;
+            case GamePhase.Predict: break;
+            case GamePhase.Score: break;
+            case GamePhase.End: break;
+        }
+    }
 }
