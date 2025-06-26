@@ -122,6 +122,7 @@
             background-color: #eee;
             padding: 10px;
             box-sizing: border-box;
+            position: relative;
         }
 
         .current-player-name {
@@ -238,6 +239,34 @@
             display: flex;
             align-items: center;
             /* background-color: #888; */
+        }
+
+        .confirm-button {
+            right: 10px;
+            bottom: 10px;
+            position: absolute;
+            width: 65px;
+            height: 30px;
+            font-size: 13.5px;
+            font-weight: 550;
+            color: #fafafa;
+            background-color: #345;
+            border-radius: 5px;
+            border: 0;
+            box-shadow: 1.5px 1.5px #222;
+        }
+
+        .confirm-button:hover {
+            background-color: #688;
+        }
+
+        #win-prediction {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            width: 48px;
+            height: 24px;
+            font-size: 13.5px;
         }
     </style>
 </head>
@@ -606,27 +635,41 @@
                         textBar.innerHTML = "How many win do you expect?";
                         winPredictionInput.value = "";
                         winPredictionInput.disabled = false;
+                        winPredictionInput.style.display = "inline-block";
                         confirmButton.disabled = false;
                         confirmButton.textContent = "Click";
 
                         await new Promise(resolve => {
                             const handler = () => {
                                 let predictionValue = parseInt(winPredictionInput.value, 10);
-                                if (!isNaN(predictionValue) && 
-                                    predictionValue >= 0 && 
-                                    predictionValue <= GameManager.round
-                                ) {
-                                    player.expectedWin = predictionValue;
-                                    confirmButton.removeEventListener("click", handler);
-                                    winPredictionInput.disabled = true;
-                                    confirmButton.disabled = true;
-                                    console.log(player.expectedWin);
-                                    resolve();
-                                } else {
-                                    console.log("Invalid Input");
+
+                                if (isNaN(predictionValue)) {
+                                    console.log(`Input should be number between 0 and ${GameManager.round}!`);
+                                    alert(`Input should be number between 0 and ${GameManager.round}!`);
+                                    return;
                                 }
+
+                                if (predictionValue < 0) {
+                                    console.log("Input should not less than 0.");
+                                    alert("Input should not less than 0.")
+                                    return;
+                                }
+
+                                if (predictionValue > GameManager.round) {
+                                    console.log(`Input should not more than ${GameManager.round}.`);
+                                    alert(`Input should not more than ${GameManager.round}.`);
+                                    return;
+                                }
+
+                                player.expectedWin = predictionValue;
+                                
+                                confirmButton.removeEventListener("click", handler);
+                                winPredictionInput.disabled = true;
+                                winPredictionInput.style.display = "none";
+                                confirmButton.disabled = true;
+                                resolve();
                             }
-                            confirmButton.addEventListener("click", handler);
+                            confirmButton.addEventListener("click", handler);   
                         });
                     } else {
                         let confidence = 0;
@@ -641,6 +684,9 @@
                         }
 
                         player.expectedWin = confidence;
+
+
+
                         await new Promise (
                             resolve => {
                                 const handler = () => {
