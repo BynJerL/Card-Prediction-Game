@@ -183,6 +183,14 @@ const GameManager = {
         // First player determine the leadSuit
     },
 
+    handleScoringPhase () {
+        // Will calculate each round score here
+    },
+
+    handleGameEndPhase () {
+        // Will calculate the final score
+    },
+
     run () {
         switch (this.phase) {
             case GamePhase.Deal: 
