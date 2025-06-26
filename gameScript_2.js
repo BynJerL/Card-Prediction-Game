@@ -114,6 +114,8 @@ const GameManager = {
     },
 
     getTurnOrder(startIndex) {
-        // 
-    }
+        return this.players.slice(startIndex).concat(this.players.slice(0, startIndex));
+    },
+
+    run () {}
 }
