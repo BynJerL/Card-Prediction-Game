@@ -87,7 +87,7 @@ const GameManager = {
     phase: null,
     cards: [],
     players: [
-        new Player("Andy", PredictStrategy.User, PlayingStrategy.User),
+        new Player("Andy", PredictStrategy.Random, PlayingStrategy.Random),
         new Player("Bob", PredictStrategy.Random, PlayingStrategy.Random),
         new Player("Charles", PredictStrategy.Random, PlayingStrategy.Random),
         new Player("Dave", PredictStrategy.Random, PlayingStrategy.Random),
@@ -259,6 +259,9 @@ const GameManager = {
                     playedCard = player.deck.pop();
                     break;
             }
+
+            this.roundState.playedCards.push(playedCard);
+            console.log(`${player.name} deploys ${playedCard.rank}${playedCard.suit}`);
 
             // First player determine the leadSuit
             if (this.roundState.turn == 0) {
