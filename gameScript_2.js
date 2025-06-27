@@ -214,10 +214,12 @@ const GameManager = {
 
     nextPrediction () {
         this.roundState.turnIndex++;
+        this.roundState.turn++;
 
         if (this.roundState.turnIndex >= this.players.length) {
             this.phase = GamePhase.Play;
             this.roundState.turnIndex = 0;
+            this.roundState.turn = 0;
         }
 
         this.run();
@@ -229,6 +231,9 @@ const GameManager = {
         const player = this.players[this.roundState.turnIndex];
 
         // First player determine the leadSuit
+        if (this.roundState.turn == 0) {
+            // Lead Suit
+        }
     },
 
     handleScoringPhase () {
