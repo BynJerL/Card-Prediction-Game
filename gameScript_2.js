@@ -229,6 +229,7 @@ const GameManager = {
         // leadIndex and turnIndex will be decided here
 
         const player = this.players[this.roundState.turnIndex];
+        var playedCard;
 
         // First player determine the leadSuit
         if (this.roundState.turn == 0) {
@@ -236,9 +237,26 @@ const GameManager = {
         }
 
         if (player.playingStrategy === PlayingStrategy.User) {
-            // 
+            // Shows the card
         } else {
-            // 
+            // Also shows the card, but hide the value
+            switch (player.playingStrategy) {
+                case PlayingStrategy.Random:
+                    playedCard = player.deck.splice(Math.floor(Math.random() * player.deck.length), 1)[0];
+                    break;
+                case PlayingStrategy.LeadSuit:
+                    if (this.roundState.leadSuit === null) {
+                        playedCard = player.deck.splice(Math.floor(Math.random() * player.deck.length), 1)[0];
+                    } else {
+                        let cardCandidates = player.deck.filter(c => c.suit === this.roundState.leadSuit);
+                        playedCard = cardCandidates[Math.floor(Math.random() * cardCandidates.length)];
+                        player.deck = player.deck.filter(c => c !== playedCard);
+                    }
+                    break;
+                default:
+                    playedCard = player.deck.pop();
+                    break;
+            }
         }
     },
 
