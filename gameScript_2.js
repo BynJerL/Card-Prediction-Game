@@ -155,15 +155,42 @@ const GameManager = {
         const player = this.players[this.roundState.turnIndex];
         
         // Placeholder for displaying the player cards/UI Handler
-        console.log(`${player.name} Cards:`);
-        for (const card of player.deck) {
-            console.log(card);
-        }
+        console.log(`${player.name}`);
 
         if (player.predictStrategy === PredictStrategy.User) {
+            for (const card of player.deck) {
+                console.log(card);
+            }
+            console.log("How many win do you expect?");
             // Show the deck
             // Demand user input
         } else {
+            for (const card of player.deck) {
+                console.log("?");
+            }
+
+            let confidence = 0;
+            
+            switch (player.predictStrategy) {
+                case PredictStrategy.Random:
+                    confidence = Math.floor(Math.random() * this.totalRound);
+                    break;
+                case PredictStrategy.Rank:
+                    confidence = player.deck.filter(c => CardRankValue[c.rank] > 9).length;
+                    break;
+                case PredictStrategy.Suit:
+                    confidence = player.deck.filter(c => c.suit === CardSuit.Spade).length;
+                    break;
+                case PredictStrategy.RankAndSuit:
+                    confidence = player.deck.filter(c => CardRankValue[c.rank] > 9 && c.suit === CardSuit.Spade).length;
+                    break;
+                case PredictStrategy.RankOrSuit:
+                    confidence = player.deck.filter(c => CardRankValue[c.rank] > 9 || c.suit === CardSuit.Spade).length;
+                    break;
+                default:
+                    confidence = 0;
+                    break;
+            }
             // Show the deck, but hide the card
             // AI doing some calculation for the win expectation
         }
