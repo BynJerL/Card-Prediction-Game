@@ -152,7 +152,7 @@ const GameManager = {
     },
 
     handlePredictionPhase () {
-        const player = this.players[this.roundState.turnIndex];
+        const player = this.roundState.turnOrder[this.roundState.turn];
         var confidence;
 
         // Placeholder for displaying the player cards/UI Handler
@@ -165,7 +165,7 @@ const GameManager = {
             for (const card of player.deck) {
                 console.log(card);
             }
-            
+
             confidence = parseInt(prompt("How many win do you expect?"), 10);
             this.nextPrediction();
 
@@ -216,10 +216,18 @@ const GameManager = {
         this.roundState.turnIndex++;
         this.roundState.turn++;
 
-        if (this.roundState.turnIndex >= this.players.length) {
+        if (this.roundState.turn >= this.players.length) {
             this.phase = GamePhase.Play;
-            this.roundState.turnIndex = 0;
-            this.roundState.turn = 0;
+            this.roundState = {
+                round: 1,
+                turn: 0,
+                leadIndex: 0,
+                turnIndex: this.roundState.leadIndex,
+                leadSuit: null,
+                playedCards: [],
+                turnOrder: this.getTurnOrderFrom(0),
+                winnerIndex: null
+            };
         }
 
         this.run();
@@ -227,8 +235,7 @@ const GameManager = {
 
     handlePlayingPhase () {
         // leadIndex and turnIndex will be decided here
-
-        const player = this.players[this.roundState.turnIndex];
+        const player = this.roundState.turnOrder[this.roundState.turn];
         var playedCard;
 
         if (player.playingStrategy === PlayingStrategy.User) {
@@ -258,6 +265,11 @@ const GameManager = {
                 this.roundState.leadSuit = playedCard.suit;
             }
         }
+    },
+
+    nextTurn () {
+        this.roundState.turnIndex++;
+        this.roundState.turn++;
     },
 
     handleScoringPhase () {
