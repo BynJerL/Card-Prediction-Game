@@ -247,9 +247,15 @@ const GameManager = {
             case GamePhase.Predict: 
                 this.handlePredictionPhase();
                 break;
-            case GamePhase.Play: break;
-            case GamePhase.Score: break;
-            case GamePhase.End: break;
+            case GamePhase.Play: 
+                this.handlePlayingPhase();
+                break;
+            case GamePhase.Score: 
+                this.handleScoringPhase();
+                break;
+            case GamePhase.End: 
+                this.handleGameEndPhase(); 
+                break;
         }
     }
 }
