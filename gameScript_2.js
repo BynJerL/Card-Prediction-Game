@@ -231,11 +231,6 @@ const GameManager = {
         const player = this.players[this.roundState.turnIndex];
         var playedCard;
 
-        // First player determine the leadSuit
-        if (this.roundState.turn == 0) {
-            // Lead Suit
-        }
-
         if (player.playingStrategy === PlayingStrategy.User) {
             // Shows the card
         } else {
@@ -256,6 +251,11 @@ const GameManager = {
                 default:
                     playedCard = player.deck.pop();
                     break;
+            }
+
+            // First player determine the leadSuit
+            if (this.roundState.turn == 0) {
+                this.roundState.leadSuit = playedCard.suit;
             }
         }
     },
