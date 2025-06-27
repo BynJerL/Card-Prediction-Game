@@ -234,6 +234,12 @@ const GameManager = {
         if (this.roundState.turn == 0) {
             // Lead Suit
         }
+
+        if (player.playingStrategy === PlayingStrategy.User) {
+            // 
+        } else {
+            // 
+        }
     },
 
     handleScoringPhase () {
