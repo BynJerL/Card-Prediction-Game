@@ -153,23 +153,31 @@ const GameManager = {
 
     handlePredictionPhase () {
         const player = this.players[this.roundState.turnIndex];
-        
+        var confidence;
+
         // Placeholder for displaying the player cards/UI Handler
         console.log(`${player.name}`);
 
         if (player.predictStrategy === PredictStrategy.User) {
+            // Show the deck
+            // Demand user input
+
             for (const card of player.deck) {
                 console.log(card);
             }
             console.log("How many win do you expect?");
-            // Show the deck
-            // Demand user input
+            confidence = parseInt(prompt(), 10);
+            this.nextPrediction();
+
+            // Will be put on event listener
+            player.expectedWin = confidence;
         } else {
+            // Show the deck, but hide the card
+            // AI doing some calculation for the win expectation
+
             for (const card of player.deck) {
                 console.log("?");
             }
-
-            let confidence = 0;
             
             switch (player.predictStrategy) {
                 case PredictStrategy.Random:
@@ -191,8 +199,10 @@ const GameManager = {
                     confidence = 0;
                     break;
             }
-            // Show the deck, but hide the card
-            // AI doing some calculation for the win expectation
+
+            player.expectedWin = confidence;
+            console.log(`${player.name} predicts ${player.expectedWin} win(s).`);
+            this.nextPrediction();
         }
 
         // Add event listener to the actionButton (will be handled by UI Manager).
@@ -200,6 +210,17 @@ const GameManager = {
         // If the player click the action button, the accessment will be shifted to other players.
         // If all player have made prediction, the game phase will be moved to the playing phase.
         // Maybe add some delay on the button disable.
+    },
+
+    nextPrediction () {
+        this.roundState.turnIndex++;
+
+        if (this.roundState.turnIndex >= this.players.length) {
+            this.phase = GamePhase.Play;
+            this.roundState.turnIndex = 0;
+        }
+
+        this.run();
     },
 
     handlePlayingPhase () {
