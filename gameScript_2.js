@@ -165,8 +165,8 @@ const GameManager = {
             for (const card of player.deck) {
                 console.log(card);
             }
-            console.log("How many win do you expect?");
-            confidence = parseInt(prompt(), 10);
+            
+            confidence = parseInt(prompt("How many win do you expect?"), 10);
             this.nextPrediction();
 
             // Will be put on event listener
