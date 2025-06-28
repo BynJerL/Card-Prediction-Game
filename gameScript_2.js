@@ -321,6 +321,7 @@ const GameManager = {
 
     handleScoringPhase () {
         // Will calculate each round score here
+        console.log(`Round ${this.roundState.round} Scores:`);
     },
 
     handleGameEndPhase () {
