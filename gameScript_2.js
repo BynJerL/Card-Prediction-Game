@@ -155,6 +155,7 @@ const GameManager = {
 
         for (const player of this.players) {
             player.deck = [];
+            player.roundScore = 0;
         }
 
         // Round robin
@@ -323,17 +324,36 @@ const GameManager = {
         // Will calculate each round score here
         console.log(`Round ${this.roundState.round} Scores:`);
         let highscore = -Infinity;
-        let highestScoreIndex = 0;
         for (let i = 0; i < this.roundState.playedCards.length; i++) {
             const score = this.roundState.playedCards[i].calculateScore(this.roundState.leadIndex)
             console.log(`${this.roundState.turnOrder[i].name} -> ${score}`);
             if (score > highscore) {
                 highscore = score;
-                highestScoreIndex = i;
+                this.roundState.winnerIndex = i;
             }
         }
 
-        console.log(`${this.roundState.turnOrder[highestScoreIndex].name} wins!`);
+        const winner = this.roundState.turnOrder[this.roundState.winnerIndex];
+        console.log(`${winner.name} wins!`);
+        winner.roundScore++;
+
+        if (this.roundState.round < this.totalRound) {
+            this.phase = GamePhase.Play;
+            this.roundState = {
+                round: ++this.roundState.round,
+                turn: 0,
+                leadIndex: this.roundState.winnerIndex,
+                turnIndex: this.roundState.winnerIndex ,
+                leadSuit: null,
+                playedCards: [],
+                turnOrder: this.getTurnOrderFrom(this.roundState.winnerIndex),
+                winnerIndex: null
+            };
+        } else {
+            this.phase = GamePhase.End;
+        }
+
+        this.run();
     },
 
     handleGameEndPhase () {
