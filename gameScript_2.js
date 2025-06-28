@@ -42,7 +42,7 @@ class Card {
         if (this.suit === CardSuit.Spade) return CardRankValue[this.rank] + 100;
         if (leadSuit !== null) return CardRankValue[this.rank] - (this.suit === leadSuit? 0 : 100);
         return CardRankValue[this.rank];
-    } 
+    }
 }
 
 class Player {
@@ -64,6 +64,11 @@ class Player {
         return this.deck.reduce((best, c) => {
             return c.calculateScore(leadSuit) > best.calculateScore(leadSuit) ? c : best;
         });
+    }
+
+    /** @param {CardSuit} [leadSuit]  */
+    getLeadCards (leadSuit = null) {
+        return this.deck.filter(c => c.suit == leadSuit);
     }
 }
 
@@ -265,7 +270,7 @@ const GameManager = {
                     if (this.roundState.leadSuit === null) {
                         playedCard = player.deck.splice(Math.floor(Math.random() * player.deck.length), 1)[0];
                     } else {
-                        let cardCandidates = player.deck.filter(c => c.suit === this.roundState.leadSuit);
+                        let cardCandidates = player.getLeadCards(this.roundState.leadSuit);
                         playedCard = cardCandidates[Math.floor(Math.random() * cardCandidates.length)];
                         player.deck = player.deck.filter(c => c !== playedCard);
                     }
