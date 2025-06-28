@@ -280,7 +280,11 @@ const GameManager = {
                         playedCard = player.deck.splice(Math.floor(Math.random() * player.deck.length), 1)[0];
                     } else {
                         let cardCandidates = player.getLeadCards(this.roundState.leadSuit);
-                        playedCard = cardCandidates[Math.floor(Math.random() * cardCandidates.length)];
+                        if (cardCandidates.length > 0) {
+                            playedCard = cardCandidates[Math.floor(Math.random() * cardCandidates.length)];
+                        } else {
+                            playedCard = player.deck[Math.floor(Math.random() * player.deck.length)];
+                        }
                         player.deck = player.deck.filter(c => c !== playedCard);
                     }
                     break;
