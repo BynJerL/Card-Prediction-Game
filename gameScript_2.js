@@ -61,26 +61,9 @@ class Player {
     /** @param {CardSuit} [leadSuit]  */
     getHighestCard (leadSuit = null) {
         if (this.deck === null) return null;
-        let best;
-        let spadeCards = this.deck.filter(c => c.suit === CardSuit.Spade);
-        if (spadeCards) {
-            best = spadeCards[0];
-            for (let i = 1; i < spadeCards.length; i++) {
-                const c = spadeCards[i];
-                if (CardRankValue[c.rank] > CardRankValue[best.rank]) {
-                    best = c;
-                }
-            }
-        } else {
-            best = this.deck[0];
-            for (let i = 1; i < this.deck.length; i++) {
-                const c = this.deck[i];
-                if (CardRankValue[c.rank] > CardRankValue[best.rank]) {
-                    best = c;
-                }
-            }
-        }
-        return best;
+        return this.deck.reduce((best, c) => {
+            return c.calculateScore(leadSuit) > best.calculateScore(leadSuit) ? c : best;
+        });
     }
 }
 
