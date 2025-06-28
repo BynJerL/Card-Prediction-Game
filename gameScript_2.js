@@ -82,6 +82,11 @@ class Player {
     getLeadCards (leadSuit = null) {
         return this.deck.filter(c => c.suit == leadSuit);
     }
+
+    /** @param {Card} card */ 
+    removeCard(card) {
+        this.deck = this.deck.filter(c => c !== card);
+    }
 }
 
 const generateCards = function () {
@@ -277,11 +282,11 @@ const GameManager = {
             // Also shows the card, but hide the value
             switch (player.playingStrategy) {
                 case PlayingStrategy.Random:
-                    playedCard = player.deck.splice(Math.floor(Math.random() * player.deck.length), 1)[0];
+                    playedCard = player.deck[Math.floor(Math.random() * player.deck.length)];
                     break;
                 case PlayingStrategy.LeadSuit:
                     if (this.roundState.leadSuit === null) {
-                        playedCard = player.deck.splice(Math.floor(Math.random() * player.deck.length), 1)[0];
+                        playedCard = player.deck[Math.floor(Math.random() * player.deck.length)];
                     } else {
                         let cardCandidates = player.getLeadCards(this.roundState.leadSuit);
                         if (cardCandidates.length > 0) {
@@ -289,21 +294,20 @@ const GameManager = {
                         } else {
                             playedCard = player.deck[Math.floor(Math.random() * player.deck.length)];
                         }
-                        player.deck = player.deck.filter(c => c !== playedCard);
                     }
                     break;
                 case PlayingStrategy.Aggresive:
                     playedCard = player.getHighestCard(this.roundState.leadSuit);
-                    player.deck = player.deck.filter(c => c !== playedCard);
                     break;
                 case PlayingStrategy.MiniLoss:
                     playedCard = player.getLowestCard(this.roundState.leadSuit);
-                    player.deck = player.deck.filter(c => c !== playedCard);
                     break;
                 default:
                     playedCard = player.deck.pop();
                     break;
             }
+
+            player.removeCard(playedCard);
 
             this.roundState.playedCards.push(playedCard);
             console.log(`${player.name} deploys ${playedCard.toString()}`);
