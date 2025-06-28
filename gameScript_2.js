@@ -155,7 +155,7 @@ const GameManager = {
 
         for (const player of this.players) {
             player.deck = [];
-            player.roundScore = 0;
+            player.totalWin = 0;
         }
 
         // Round robin
@@ -336,7 +336,7 @@ const GameManager = {
 
         const winner = this.roundState.turnOrder[this.roundState.winnerIndex];
         console.log(`${winner.name} wins!`);
-        winner.roundScore++;
+        winner.totalWin++;
 
         if (this.roundState.round < this.totalRound) {
             this.phase = GamePhase.Play;
@@ -359,6 +359,19 @@ const GameManager = {
 
     handleGameEndPhase () {
         // Will calculate the final score
+        console.log("\nFinal Score");
+        for (const player of this.players) {
+            const finalScore = (player.totalWin === player.expectedWin? 1: -1) * (player.expectedWin) * 10;
+            player.totalScore += finalScore;
+            console.log(`${player.name} -> ${finalScore}`);
+        }
+
+        console.log("\nTotal Score");
+        for (const player of this.players) {
+            console.log(`${player.name} -> ${player.totalScore}`);
+        }
+
+        this.phase = null;
     },
 
     run () {
