@@ -102,7 +102,7 @@ const GameManager = {
     phase: null,
     cards: [],
     players: [
-        new Player("Andy", PredictStrategy.Random, PlayingStrategy.Random),
+        new Player("Andy", PredictStrategy.Random, PlayingStrategy.Aggresive),
         new Player("Bob", PredictStrategy.Random, PlayingStrategy.Random),
         new Player("Charles", PredictStrategy.Random, PlayingStrategy.Random),
         new Player("Dave", PredictStrategy.Random, PlayingStrategy.Random),
@@ -271,6 +271,8 @@ const GameManager = {
                     }
                     break;
                 case PlayingStrategy.Aggresive:
+                    playedCard = player.getHighestCard(this.roundState.leadSuit);
+                    player.deck = player.deck.filter(c => c !== playedCard);
                     break;
                 default:
                     playedCard = player.deck.pop();
