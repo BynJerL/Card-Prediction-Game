@@ -67,6 +67,14 @@ class Player {
     }
 
     /** @param {CardSuit} [leadSuit]  */
+    getLowestCard (leadSuit = null) {
+        if (this.deck === null) return null;
+        return this.deck.reduce((lowest, c) => {
+            return c.calculateScore(leadSuit) < lowest.calculateScore(leadSuit) ? c : lowest;
+        });
+    }
+
+    /** @param {CardSuit} [leadSuit]  */
     getLeadCards (leadSuit = null) {
         return this.deck.filter(c => c.suit == leadSuit);
     }
@@ -277,6 +285,10 @@ const GameManager = {
                     break;
                 case PlayingStrategy.Aggresive:
                     playedCard = player.getHighestCard(this.roundState.leadSuit);
+                    player.deck = player.deck.filter(c => c !== playedCard);
+                    break;
+                case PlayingStrategy.MiniLoss:
+                    playedCard = player.getLowestCard(this.roundState.leadSuit);
                     player.deck = player.deck.filter(c => c !== playedCard);
                     break;
                 default:
