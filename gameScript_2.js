@@ -322,6 +322,18 @@ const GameManager = {
     handleScoringPhase () {
         // Will calculate each round score here
         console.log(`Round ${this.roundState.round} Scores:`);
+        let highscore = -Infinity;
+        let highestScoreIndex = 0;
+        for (let i = 0; i < this.roundState.playedCards.length; i++) {
+            const score = this.roundState.playedCards[i].calculateScore(this.roundState.leadIndex)
+            console.log(`${this.roundState.turnOrder[i].name} -> ${score}`);
+            if (score > highscore) {
+                highscore = score;
+                highestScoreIndex = i;
+            }
+        }
+
+        console.log(`${this.roundState.turnOrder[highestScoreIndex].name} wins!`);
     },
 
     handleGameEndPhase () {
