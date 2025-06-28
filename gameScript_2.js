@@ -50,6 +50,30 @@ class Player {
         this.predictStrategy = predictStrategy;
         this.playingStrategy = playingStrategy;
     }
+
+    getHighestCard () {
+        if (this.deck === null) return null;
+        let best;
+        let spadeCards = this.deck.filter(c => c.suit === CardSuit.Spade);
+        if (spadeCards) {
+            best = spadeCards[0];
+            for (let i = 1; i < spadeCards.length; i++) {
+                const c = spadeCards[i];
+                if (CardRankValue[c.rank] > CardRankValue[best.rank]) {
+                    best = c;
+                }
+            }
+        } else {
+            best = this.deck[0];
+            for (let i = 1; i < this.deck.length; i++) {
+                const c = this.deck[i];
+                if (CardRankValue[c.rank] > CardRankValue[best.rank]) {
+                    best = c;
+                }
+            }
+        }
+        return best;
+    }
 }
 
 const generateCards = function () {
@@ -254,6 +278,8 @@ const GameManager = {
                         playedCard = cardCandidates[Math.floor(Math.random() * cardCandidates.length)];
                         player.deck = player.deck.filter(c => c !== playedCard);
                     }
+                    break;
+                case PlayingStrategy.Aggresive:
                     break;
                 default:
                     playedCard = player.deck.pop();
