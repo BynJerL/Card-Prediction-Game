@@ -36,6 +36,13 @@ class Card {
         this.suit = suit;
         this.rank = rank;
     }
+
+    /** @param {CardSuit} leadSuit */
+    calculateScore (leadSuit = null) {
+        if (this.suit === CardSuit.Spade) return CardRankValue[this.rank] + 100;
+        if (leadSuit !== null) return CardRankValue[this.rank] - (this.suit === leadSuit? 0 : 100);
+        return CardRankValue[this.rank];
+    } 
 }
 
 class Player {
@@ -51,7 +58,8 @@ class Player {
         this.playingStrategy = playingStrategy;
     }
 
-    getHighestCard () {
+    /** @param {CardSuit} [leadSuit]  */
+    getHighestCard (leadSuit = null) {
         if (this.deck === null) return null;
         let best;
         let spadeCards = this.deck.filter(c => c.suit === CardSuit.Spade);
