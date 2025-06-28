@@ -304,11 +304,19 @@ const GameManager = {
                 this.roundState.leadSuit = playedCard.suit;
             }
         }
+
+        this.nextTurn();
     },
 
     nextTurn () {
         this.roundState.turnIndex++;
         this.roundState.turn++;
+
+        if (this.roundState.turn >= this.players.length) {
+            this.phase = GamePhase.Score;
+        }
+
+        this.run();
     },
 
     handleScoringPhase () {
