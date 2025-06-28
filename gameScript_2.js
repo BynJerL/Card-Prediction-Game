@@ -384,6 +384,14 @@ const GameManager = {
         }
 
         this.phase = null;
+        this.handlePlayAgain();
+    },
+
+    handlePlayAgain () {
+        const answer = prompt("Play Again?");
+        if (answer === "yes") {
+            this.init();
+        }
     },
 
     run () {
