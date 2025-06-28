@@ -1,7 +1,12 @@
+body {
+    margin: 0;
+}
+
 #game-container {
-    width: 330px;
-    height: 550px;
+    width: 360px;
+    height: 600px;
     background-color: lightblue;
     font-family: cursive;
     user-select: none;
+    margin: auto;
 }
