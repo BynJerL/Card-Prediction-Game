@@ -43,6 +43,10 @@ class Card {
         if (leadSuit !== null) return CardRankValue[this.rank] - (this.suit === leadSuit? 0 : 100);
         return CardRankValue[this.rank];
     }
+
+    toString () {
+        return `${this.rank}${this.suit}`;
+    }
 }
 
 class Player {
@@ -302,7 +306,7 @@ const GameManager = {
             }
 
             this.roundState.playedCards.push(playedCard);
-            console.log(`${player.name} deploys ${playedCard.rank}${playedCard.suit}`);
+            console.log(`${player.name} deploys ${playedCard.toString()}`);
 
             // First player determine the leadSuit
             if (this.roundState.turn == 0) {
