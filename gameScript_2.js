@@ -342,11 +342,11 @@ const GameManager = {
             this.roundState = {
                 round: ++this.roundState.round,
                 turn: 0,
-                leadIndex: this.roundState.winnerIndex,
-                turnIndex: this.roundState.winnerIndex ,
+                leadIndex: this.players.indexOf(winner),
+                turnIndex: this.players.indexOf(winner),
                 leadSuit: null,
                 playedCards: [],
-                turnOrder: this.getTurnOrderFrom(this.roundState.winnerIndex),
+                turnOrder: this.getTurnOrderFrom(this.players.indexOf(winner)),
                 winnerIndex: null
             };
         } else {
