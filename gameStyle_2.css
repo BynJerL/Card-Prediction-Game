@@ -10,3 +10,8 @@ body {
     user-select: none;
     margin: auto;
 }
+
+#game-items {
+    height: 32px;
+    background-color: tan;
+}
