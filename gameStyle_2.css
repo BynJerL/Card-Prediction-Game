@@ -90,11 +90,18 @@ body {
 }
 
 .card.on-deck .front-side {
-    font-size: 50px;
-    color: #209;
-    background-color: #da0;
+    font-size: 20px;
+    color: #da0;
+    background-color: #208;
     text-align: center;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px double #da0;
+    box-sizing: border-box;
+    line-height: 0;
+    letter-spacing: 0;
 }
 
 .back-side {
