@@ -12,19 +12,35 @@ body {
 }
 
 #game-items {
-    height: 32px;
-    background-color: tan;
+    padding-left: 10px;
+    height: 50px;
+    background-color: #ddd;
     display: flex;
+    align-items: center;
+    position: relative;
+    gap: 5px;
 }
 
 .menu {
-    width: 30px;
-    height: 30px;
-    border: 1px solid black;
-    font-size: 28px;
+    width: 32px;
+    height: 32px;
+    /* border: 1px solid black; */
+    font-size: 24px;
     font-weight: 500;
+    color: #f0f0f0;
     line-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #606060;
+    border-radius: 5px;
+}
+
+.menu:hover {
+    background-color: #444;
+}
+
+#option-button {
+    position: absolute;
+    right: 10px;
 }
