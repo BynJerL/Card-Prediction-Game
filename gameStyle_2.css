@@ -62,7 +62,7 @@ body {
     width: 30px;
     height: 40px;
     border-radius: 5px;
-    border: 1px solid;
+    /* border: 1px solid; */
     font-family: sans-serif;
 }
 
@@ -74,6 +74,7 @@ body {
     position: relative;
     display: flex;
     justify-content: center;
+    box-shadow: 1.5px 1.5px 2px #111;
 }
 
 .card.on-deck .rank {
@@ -96,4 +97,9 @@ body {
 
 .red {
     color: #e00;
+}
+
+#current-player-deck {
+    display: flex;
+    gap: 5px;
 }
