@@ -384,7 +384,7 @@ const GameManager = {
         }
 
         this.phase = null;
-        this.handlePlayAgain();
+        // this.handlePlayAgain();
     },
 
     handlePlayAgain () {
