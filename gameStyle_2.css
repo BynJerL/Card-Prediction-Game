@@ -58,6 +58,12 @@ body {
     background-color: chocolate;
 }
 
+.card {
+    position: relative;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
 .card.on-deck {
     width: 30px;
     height: 40px;
