@@ -197,14 +197,14 @@ body {
 }
 
 .card.on-board .rank {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 600;
     position: absolute;
     top: 5px;
 }
 
 .card.on-board .suit {
-    font-size: 32px;
+    font-size: 35px;
     position: absolute;
     bottom: 2px;
 }
