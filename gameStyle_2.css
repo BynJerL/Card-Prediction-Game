@@ -9,6 +9,7 @@ body {
     font-family: cursive;
     user-select: none;
     margin: auto;
+    position: relative;
 }
 
 #game-items {
@@ -43,4 +44,16 @@ body {
 #option-button {
     position: absolute;
     right: 10px;
+}
+
+#game-board {
+    width: 100%;
+    height: 360px;
+    background-color: chartreuse;
+}
+
+#game-action {
+    width: 100%;
+    height: 190px;
+    background-color: chocolate;
 }
