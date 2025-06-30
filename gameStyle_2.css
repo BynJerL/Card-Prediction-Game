@@ -211,7 +211,7 @@ body {
 
 .player-card {
     width: 60px;
-    height: 90px;
+    height: 83px;
     background-color: #ddd;
     display: flex;
     flex-direction: column;
@@ -220,16 +220,18 @@ body {
 }
 
 .player-card .player-name {
-    font-size: 13.5px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 #played-cards {
-    width: 240px;
-    height: 300px;
+    width: 220px;
+    height: 280px;
     background-color: aliceblue;
     display: flex;
-    align-items: center;
+    align-content: center;
     justify-content: center;
     flex-wrap: wrap;
     gap: 5px;
+    row-gap: 10px;
 }
