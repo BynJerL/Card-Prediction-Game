@@ -50,6 +50,10 @@ body {
     width: 100%;
     height: 360px;
     background-color: chartreuse;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
 }
 
 #game-action {
@@ -171,6 +175,8 @@ body {
     height: 60px;
     border-radius: 5px;
     font-family: sans-serif;
+    position: absolute;
+    bottom: 0;
 }
 
 .card.on-board .front-side {
@@ -201,4 +207,29 @@ body {
     font-size: 32px;
     position: absolute;
     bottom: 2px;
+}
+
+.player-card {
+    width: 60px;
+    height: 90px;
+    background-color: #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.player-card .player-name {
+    font-size: 13.5px;
+}
+
+#played-cards {
+    width: 240px;
+    height: 300px;
+    background-color: aliceblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
 }
