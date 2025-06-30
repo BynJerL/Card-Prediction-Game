@@ -82,7 +82,7 @@ body {
 }
 
 .card.on-deck .suit {
-    font-size: 28px;
+    font-size: 25px;
     font-weight: 550;
     position: absolute;
     bottom: 0px;
