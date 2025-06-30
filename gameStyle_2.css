@@ -87,3 +87,11 @@ body {
     position: absolute;
     bottom: 0px;
 }
+
+.black {
+    color: #111;
+}
+
+.red {
+    color: #e00;
+}
