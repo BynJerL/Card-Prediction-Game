@@ -101,6 +101,7 @@ body {
     position: relative;
     display: flex;
     justify-content: center;
+    transform: rotateY(180deg);
 }
 
 .card.on-deck .rank {
@@ -128,4 +129,8 @@ body {
 #current-player-deck {
     display: flex;
     gap: 5px;
+}
+
+.card.revealed, .card:hover {
+    transform: rotateY(180deg);
 }
