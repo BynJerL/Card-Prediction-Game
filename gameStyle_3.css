@@ -304,3 +304,30 @@ body {
     width: 60px;
     height: 160px;
 }
+
+.opponent .card-deck {
+    position: absolute;
+    display: flex;
+}
+
+.opponent:first-child .card-deck{
+    right: 12px;
+    top: 18px;
+}
+
+.opponent .card-deck .card {
+    width: 27px;
+    height: 36px;
+    font-size: 18px;
+    color: #fc0;
+    background-color: #05b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px double #fc0;
+    box-sizing: border-box;
+}
+
+.opponent:first-child .card-deck .card {
+    margin: -8px;
+}
