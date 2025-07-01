@@ -4,13 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Prediction Game</title>
+    <link rel="stylesheet" href="gameStyle_3.css">
 </head>
 <body>
     <section id="game-container">
         <section class="game-pages" id="start-menu"></section>
         <section class="game-pages" id="configuration-menu"></section>
         <section class="game-pages" id="main-game">
-            
+            <section id="game-items">
+                <div id="score-table-button" class="menu" title="Score Table">▦</div>
+                <div id="log-check-button" class="menu" title="Log">⧗</div>
+                <div id="how-to-play-button" class="menu" title="How to Play">🛈</div>
+                <div id="option-button" class="menu" title="More Menu">☰</div>
+            </section>
+            <section class="popup-overlay" id="score-popup">
+                <div class="popup-content" id="score-popup-content">
+                    <table id="score-table">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="game-board"></section>
+            <section id="game-mainplayer">
+                
+            </section>
         </section>
     </section>
 </body>
