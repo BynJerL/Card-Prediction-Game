@@ -323,7 +323,7 @@ body {
 
 .opponent:first-child .card-deck{
     flex-direction: row;
-    right: 10px;
+    left: 75px;
     top: 10px;
 }
 
@@ -344,6 +344,6 @@ body {
 
 .opponent:first-child .card-deck .card {
     margin-top: 0;
-    margin-left: -18px;
+    margin-right: -18px;
     transform: none;
 }
