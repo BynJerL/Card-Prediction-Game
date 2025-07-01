@@ -124,7 +124,7 @@ const GameManager = {
     phase: null,
     cards: [],
     players: [
-        new Player("Andy", PredictStrategy.RankAndSuit, PlayingStrategy.Aggresive),
+        new Player("You", PredictStrategy.RankAndSuit, PlayingStrategy.Aggresive),
         new Player("Bob", PredictStrategy.Random, PlayingStrategy.Random),
         new Player("Charles", PredictStrategy.Suit, PlayingStrategy.LeadSuit),
         new Player("Dave", PredictStrategy.Random, PlayingStrategy.Random),
