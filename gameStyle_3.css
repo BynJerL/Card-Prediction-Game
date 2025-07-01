@@ -117,7 +117,7 @@ body {
 
 #game-mainplayer .card-deck {
     width: fit-content;
-    margin-top: 35px;
+    margin-top: 40px;
     display: flex;
     position: relative;
     box-sizing: border-box;
@@ -131,7 +131,7 @@ body {
     background-color: #f0f0f0;
     border: 1px solid #555;
     box-shadow: 1px 1px 2px#333;
-    margin-left: -40px;
+    margin-left: -45px;
     transition: transform 0.2s;
     box-sizing: border-box;
 }
@@ -140,15 +140,20 @@ body {
     margin-left: 0;
 }
 
+.card.onplayer:nth-child(1) {z-index: 1; }
+.card.onplayer:nth-child(2) {z-index: 2; }
+.card.onplayer:nth-child(3) {z-index: 3; }
+.card.onplayer:nth-child(4) {z-index: 4; }
+.card.onplayer:nth-child(5) {z-index: 5; }
+.card.onplayer:nth-child(6) {z-index: 6; }
+.card.onplayer:nth-child(7) {z-index: 7; }
+.card.onplayer:nth-child(8) {z-index: 8; }
+
 .card.onplayer:hover, .card.onplayer.picked {
-    transform: translateY(-10px);
+    transform: translateY(-15px);
     z-index: 20;
     margin-right: 30px;
 }
-
-.card-deck .card.onplayer:nth-child(1) {z-index: 1; }
-.card-deck .card.onplayer:nth-child(2) {z-index: 2; }
-.card-deck .card.onplayer:nth-child(3) {z-index: 3; }
-.card-deck .card.onplayer:nth-child(4) {z-index: 4; }
-.card-deck .card.onplayer:nth-child(5) {z-index: 5; }
-.card-deck .card.onplayer:nth-child(6) {z-index: 6; }
+.card.onplayer:last-child:hover, .card.onplayer:last-child.picked {
+    margin-right: 0;
+}
