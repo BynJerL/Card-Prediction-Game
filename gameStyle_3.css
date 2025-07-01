@@ -80,4 +80,14 @@ body {
     border: 3px dashed #fc0;
     box-sizing: border-box;
     border-radius: 7.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+}
+
+.card.ondeal.empty {
+    font-size: 20px;
+    font-weight: 650;
+    color: #fc0;
 }
