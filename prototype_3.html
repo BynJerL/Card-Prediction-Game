@@ -115,6 +115,13 @@
         document.getElementById('confirm-button').addEventListener('click', () => {
             alert('Confirm action triggered!');
         });
+
+        document.querySelectorAll('.card.onplayer').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.card.onplayer').forEach(c => c.classList.remove('picked'));
+                card.classList.toggle('picked');
+            });
+        });
     </script>
 </body>
 </html>

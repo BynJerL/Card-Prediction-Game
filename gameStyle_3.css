@@ -128,13 +128,13 @@ body {
 }
 
 .card.onplayer {
-    width: 75px;
-    height: 100px;
+    width: 66px;
+    height: 88px;
     border-radius: 7.5px;
     background-color: #f0f0f0;
     border: 1px solid #555;
     box-shadow: 1px 1px 2px#333;
-    margin-left: -45px;
+    margin-left: -35px;
     transition: transform 0.2s;
     transform-style: preserve-3d;
     box-sizing: border-box;
@@ -207,7 +207,7 @@ body {
     position: absolute;
     line-height: 1;
     bottom: 10px;
-    font-size: 48px;
+    font-size: 36px;
 }
 
 .card.onplayer .back-side .rank {
