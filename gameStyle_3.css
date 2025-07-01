@@ -308,11 +308,23 @@ body {
 .opponent .card-deck {
     position: absolute;
     display: flex;
+    flex-direction: column;
+}
+
+#opponent-2 .card-deck, #opponent-4 .card-deck {
+    left: 15px;
+    top: 30px;
+}
+
+#opponent-3 .card-deck, #opponent-5 .card-deck {
+    right: 15px;
+    top: 30px;
 }
 
 .opponent:first-child .card-deck{
-    right: 12px;
-    top: 18px;
+    flex-direction: row;
+    right: 10px;
+    top: 10px;
 }
 
 .opponent .card-deck .card {
@@ -326,8 +338,12 @@ body {
     justify-content: center;
     border: 3px double #fc0;
     box-sizing: border-box;
+    transform: rotatez(90deg);
+    margin-bottom: -24px;
 }
 
 .opponent:first-child .card-deck .card {
-    margin: -8px;
+    margin-top: 0;
+    margin-left: -18px;
+    transform: none;
 }
