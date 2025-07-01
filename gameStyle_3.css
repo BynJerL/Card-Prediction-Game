@@ -7,7 +7,7 @@ body {
 
 #game-container {
     width: 360px;
-    height: 700px;
+    height: 720px;
     margin: auto;
     background-color: #f0f0f0;
     user-select: none;
@@ -53,11 +53,12 @@ body {
 
 #game-board {
     width: 100%;
-    height: 420px;
+    height: 400px;
     background-color: green;
     display: flex;
     justify-content: center;
     position: relative;
+    font-variant: small-caps;
 }
 
 #dealing-area {
@@ -73,7 +74,7 @@ body {
     align-content: center;
     justify-content: center;
     gap: 15px;
-    bottom: 50px;
+    bottom: 30px;
 }
 
 .card.ondeal {
@@ -97,10 +98,11 @@ body {
 #game-mainplayer {
     background-color: darkgreen;
     width: 100%;
-    height: 230px;
+    height: 270px;
     display: flex;
     justify-content: center;
     position: relative;
+    font-variant: small-caps;
 }
 
 #game-mainplayer .player-name {
@@ -230,7 +232,7 @@ body {
     width: 100%;
     display: flex;
     position: absolute;
-    top: 160px;
+    top: 200px;
     gap: 15px;
     justify-content: center;
 }
@@ -246,6 +248,7 @@ body {
     font-weight: 600;
     border-radius: 7px;
     box-shadow: 1px 1px 2px #222;
+    cursor: pointer;
 }
 
 .action-buttons *:hover {
@@ -340,10 +343,38 @@ body {
     box-sizing: border-box;
     transform: rotatez(90deg);
     margin-bottom: -24px;
+    line-height: 0;
+    letter-spacing: 0;
 }
 
 .opponent:first-child .card-deck .card {
     margin-top: 0;
     margin-right: -18px;
     transform: none;
+}
+
+.action-content {
+    position: absolute;
+    top: 140px;
+    color: #f0f0f0;
+    font-weight: 550;
+}
+
+.input-manip-button {
+    display: inline-block;
+    background-color: #720;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 1;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-manip-button:hover {
+    background-color: #420;
+}
+
+#prediction-input {
+    width: 32px;
 }
