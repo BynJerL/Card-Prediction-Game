@@ -95,8 +95,26 @@
                         </div>
                     </div>
                 </div>
+                <div class="action-buttons">
+                    <div id="flip-button">Flip</div>
+                    <div id="confirm-button">Confirm</div>
+                </div>
             </section>
         </section>
     </section>
+
+    <script>
+        // Placeholder for game logic
+        document.getElementById('flip-button').addEventListener('click', () => {
+            const cards = document.querySelectorAll('.card.onplayer');
+            cards.forEach(card => {
+                card.classList.toggle('flipped');
+            });
+        });
+
+        document.getElementById('confirm-button').addEventListener('click', () => {
+            alert('Confirm action triggered!');
+        });
+    </script>
 </body>
 </html>
