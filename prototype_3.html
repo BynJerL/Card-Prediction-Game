@@ -26,6 +26,21 @@
                 </div>
             </section>
             <section id="game-board">
+                <div class="opponent" id="opponent-1">
+                    <div class="player-name">Bob</div>
+                </div>
+                <div class="opponent" id="opponent-2">
+                    <div class="player-name">Charles</div>
+                </div>
+                <div class="opponent" id="opponent-3">
+                    <div class="player-name">Dave</div>
+                </div>
+                <div class="opponent" id="opponent-4">
+                    <div class="player-name">Edwin</div>
+                </div>
+                <div class="opponent" id="opponent-5">
+                    <div class="player-name">Frank</div>
+                </div>
                 <div id="dealing-area">
                     <div class="card ondeal empty">1</div>
                     <div class="card ondeal empty">2</div>
@@ -114,6 +129,7 @@
 
         document.getElementById('confirm-button').addEventListener('click', () => {
             alert('Confirm action triggered!');
+            document.querySelectorAll('.card.onplayer').forEach(c => c.classList.remove('picked'));
         });
 
         document.querySelectorAll('.card.onplayer').forEach(card => {
