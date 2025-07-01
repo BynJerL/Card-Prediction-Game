@@ -133,7 +133,9 @@ body {
     box-shadow: 1px 1px 2px#333;
     margin-left: -45px;
     transition: transform 0.2s;
+    transform-style: preserve-3d;
     box-sizing: border-box;
+    position: relative;
 }
 
 .card.onplayer:first-child {
@@ -154,6 +156,65 @@ body {
     z-index: 20;
     margin-right: 30px;
 }
+
+.card.onplayer.flipped {
+    transform: rotateY(180deg);
+}
+
 .card.onplayer:last-child:hover, .card.onplayer:last-child.picked {
     margin-right: 0;
+}
+
+.card.onplayer .front-side, .card.onplayer .back-side {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: inherit;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.card.onplayer .front-side {
+    background-color: #05b;
+    color: #fc0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    line-height: 1;
+    border: 6px double #fc0;
+    box-sizing: border-box;
+}
+
+.card.onplayer .back-side {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    background-color: #f0f0f0;
+    transform: rotateY(180deg);
+}
+
+.card.onplayer .back-side .suit {
+    position: absolute;
+    line-height: 1;
+    bottom: 10px;
+    font-size: 48px;
+}
+
+.card.onplayer .back-side .rank {
+    position: absolute;
+    line-height: 1;
+    top: 10px;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.card .red {
+    color: #c00;
+}
+
+.card .black {
+    color: #111;
 }
