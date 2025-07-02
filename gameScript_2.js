@@ -124,7 +124,7 @@ const GameManager = {
     phase: null,
     cards: [],
     players: [
-        new Player("You", PredictStrategy.RankAndSuit, PlayingStrategy.Aggresive),
+        new Player("You", PredictStrategy.User, PlayingStrategy.Aggresive),
         new Player("Bob", PredictStrategy.Random, PlayingStrategy.Random),
         new Player("Charles", PredictStrategy.Suit, PlayingStrategy.LeadSuit),
         new Player("Dave", PredictStrategy.Random, PlayingStrategy.Random),
@@ -200,21 +200,33 @@ const GameManager = {
 
         // Placeholder for displaying the player cards/UI Handler
         console.log(`${player.name}`);
-        UIManager.showPredictionInput();
 
         if (player.predictStrategy === PredictStrategy.User) {
             // Show the deck
-            // Demand user input
-
-            for (const card of player.deck) {
-                console.log(card);
-            }
-
-            confidence = parseInt(prompt("How many win do you expect?"), 10);
-            this.nextPrediction();
-
+            UIManager.showPredictionInput();
             // Will be put on event listener
-            player.expectedWin = confidence;
+            document.getElementById("confirm-button").addEventListener("click", (e) => {
+                confidence = parseInt(document.getElementById("prediction-input").value);
+                if (isNaN(confidence)) {
+                    alert(`Input must be a number, between 0 and ${this.totalRound}`);
+                    return;
+                }
+
+                if (confidence < 0) {
+                    alert("Number cannot be less than 0");
+                    return;
+                }
+
+                if (confidence > this.totalRound) {
+                    alert(`Number cannot pass total round: ${this.totalRound}`);
+                    return;
+                }
+                
+                player.expectedWin = confidence;
+
+                UIManager.clearActionContent();
+                this.nextPrediction(); 
+            });
         } else {
             // Show the deck, but hide the card
             // AI doing some calculation for the win expectation
@@ -485,10 +497,11 @@ const UIManager = {
         How many win(s) do you want to predict?
         <div class="action-input">
             <span class="input-manip-button">&plus;</span>
-            <input type="number" id="prediction-input" min="0" max="8" value="1">
+            <input type="number" id="prediction-input" min="0" max="${GameManager.totalRound}" value="1">
             <span class="input-manip-button">&minus;</span>
             <span class="action-input-unit">win(s)</span>
         </div>`;
+        
     }
 };
 

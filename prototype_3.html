@@ -187,11 +187,6 @@
             });
         });
 
-        document.getElementById('confirm-button').addEventListener('click', () => {
-            alert('Confirm action triggered!');
-            document.querySelectorAll('.card.onplayer').forEach(c => c.classList.remove('picked'));
-        });
-
         document.querySelectorAll('.card.onplayer').forEach(card => {
             card.addEventListener('click', () => {
                 if (!card.classList.contains('flipped')) return;
