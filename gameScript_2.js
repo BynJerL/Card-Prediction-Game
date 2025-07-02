@@ -446,7 +446,11 @@ const UIManager = {
                             <div class="suit${color}">${card.suit}</div>
                         </div>
                     </div>`
-                });
+                }).join("");
+            } else {
+                opponentsCardDeck[idx - 1].innerHTML = player.deck.map((card) => {
+                    return `<div class="card ondisplay">&#x2756;</div>`;
+                }).join("");
             }
         });
     }
