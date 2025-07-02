@@ -200,6 +200,7 @@ const GameManager = {
 
         // Placeholder for displaying the player cards/UI Handler
         console.log(`${player.name}`);
+        UIManager.showPredictionInput();
 
         if (player.predictStrategy === PredictStrategy.User) {
             // Show the deck
