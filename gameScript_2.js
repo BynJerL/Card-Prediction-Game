@@ -299,6 +299,7 @@ const GameManager = {
         // leadIndex and turnIndex will be decided here
         const player = this.roundState.turnOrder[this.roundState.turn];
         var playedCard = null;
+        var playerIndex = this.players.indexOf(player);
 
         if (player.playingStrategy === PlayingStrategy.User) {
             UIManager.writeActionContent("Choose a card");
@@ -311,30 +312,14 @@ const GameManager = {
 
                 if (playedCard === null) return;
                 
-                let playerIndex = this.players.indexOf(player); 
                 player.removeCard(playedCard);
                 this.roundState.playedCards.push(playedCard);
-                const cardOnDeal = document.querySelectorAll("#dealing-area .card.ondeal")[playerIndex];
-                cardOnDeal.classList.remove("empty");
-                cardOnDeal.classList.add("occupied");
 
                 if (this.roundState.turn == 0) {
                     this.roundState.leadSuit = playedCard.suit;
                 }
 
-                let color = "";
-                switch (playedCard.suit) {
-                    case CardSuit.Heart:
-                    case CardSuit.Diamond:
-                        color = " red";
-                        break;
-                    case CardSuit.Club:
-                    case CardSuit.Spade:
-                        color = " black";
-                        break;
-                }
-
-                cardOnDeal.innerHTML = `<div class="rank${color}">${playedCard.rank}</div><div class="suit${color}">${playedCard.suit}</div>`;
+                UIManager.insertCardToDealingArea(playerIndex, playedCard);
                 UIManager.renderCards();
                 this.nextTurn();
             }
@@ -363,20 +348,23 @@ const GameManager = {
                     playedCard = player.getLowestCard(this.roundState.leadSuit);
                     break;
                 default:
-                    playedCard = player.deck.pop();
+                    playedCard = player.deck.at(-1);
                     break;
             }
 
             player.removeCard(playedCard);
-
             this.roundState.playedCards.push(playedCard);
+            UIManager.insertCardToDealingArea(playerIndex, playedCard);
+            UIManager.renderCards();
             console.log(`${player.name} deploys ${playedCard.toString()}`);
+            UIManager.writeActionContent(`${player.name} deploys ${playedCard.toString()}`);
 
             // First player determine the leadSuit
             if (this.roundState.turn == 0) {
                 this.roundState.leadSuit = playedCard.suit;
             }
-            this.nextTurn();
+
+            document.getElementById("confirm-button").onclick = () => {this.nextTurn();};
         }
     },
 
@@ -543,6 +531,24 @@ const UIManager = {
     },
     clearDealingArea () {
 
+    },
+    insertCardToDealingArea (playerIndex, playedCard) {
+        const cardOnDeal = document.querySelectorAll("#dealing-area .card.ondeal")[playerIndex];
+        cardOnDeal.classList.remove("empty");
+        cardOnDeal.classList.add("occupied");
+        let color = "";
+        switch (playedCard.suit) {
+            case CardSuit.Heart:
+            case CardSuit.Diamond:
+                color = " red";
+                break;
+            case CardSuit.Club:
+            case CardSuit.Spade:
+                color = " black";
+                break;
+        }
+
+        cardOnDeal.innerHTML = `<div class="rank${color}">${playedCard.rank}</div><div class="suit${color}">${playedCard.suit}</div>`;
     },
     clearActionContent () {
         document.querySelector("#game-mainplayer .action-content").innerHTML = "";
