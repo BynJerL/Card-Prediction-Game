@@ -177,6 +177,7 @@ const GameManager = {
         }
 
         UIManager.renderCards();
+        UIManager.clearActionContent();
 
         this.roundState = {
             round: 0,
@@ -475,6 +476,19 @@ const UIManager = {
             }
         });
     },
+    clearActionContent () {
+        document.querySelector("#game-mainplayer .action-content").innerHTML = "";
+    },
+    showPredictionInput () {
+        document.querySelector("#game-mainplayer .action-content").innerHTML = `
+        How many win(s) do you want to predict?
+        <div class="action-input">
+            <span class="input-manip-button">&plus;</span>
+            <input type="number" id="prediction-input" min="0" max="8" value="1">
+            <span class="input-manip-button">&minus;</span>
+            <span class="action-input-unit">win(s)</span>
+        </div>`;
+    }
 };
 
 GameManager.init(7);
