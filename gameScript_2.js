@@ -174,6 +174,8 @@ const GameManager = {
             }
         }
 
+        UIManager.renderCards();
+
         this.roundState = {
             round: 0,
             turn: 0,
@@ -425,13 +427,29 @@ const UIManager = {
         });
         GameManager.players.forEach((player, idx) => {
             if (idx === 0) {
-                for (const card of player.deck) {
-                    
-                }
+                mainPlayerCardDeck.innerHTML = player.deck.map((card) => {
+                    let color = "";
+                    switch (card.suit) {
+                        case CardSuit.Heart:
+                        case CardSuit.Diamond:
+                            color = " red";
+                            break;
+                        case CardSuit.Club:
+                        case CardSuit.Spade:
+                            color = " black";
+                            break;
+                    }
+                    return `<div class="card onplayer">
+                        <div class="front-side">&#x2756;</div>
+                        <div class="back-side">
+                            <div class="rank${color}">${card.rank}</div>
+                            <div class="suit${color}">${card.suit}</div>
+                        </div>
+                    </div>`
+                });
             }
         });
     }
 };
 
 GameManager.init();
-UIManager.renderCards();
