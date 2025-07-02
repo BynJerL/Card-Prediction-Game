@@ -457,3 +457,11 @@ body {
 #score-table th:first-child {
     width: 100px;
 }
+
+#score-popup {
+    display: none;
+}
+
+#score-popup.active {
+    display: block;
+}

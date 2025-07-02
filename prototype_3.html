@@ -228,6 +228,11 @@
                 card.classList.toggle('flipped');
             });
         });
+
+        document.getElementById('score-table-button').addEventListener('click', () => {
+            const scorePopup = document.getElementById('score-popup');
+            scorePopup.classList.toggle('active');
+        });
     </script>
 </body>
 </html>
