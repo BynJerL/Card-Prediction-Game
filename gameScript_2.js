@@ -530,7 +530,11 @@ const UIManager = {
         });
     },
     clearDealingArea () {
-
+        document.getElementById("dealing-area").innerHTML = GameManager.players.map(
+            (player, idx) => {
+                return `<div class="card ondeal empty">${idx + 1}</div>`;
+            }
+        ).join("");
     },
     insertCardToDealingArea (playerIndex, playedCard) {
         const cardOnDeal = document.querySelectorAll("#dealing-area .card.ondeal")[playerIndex];
