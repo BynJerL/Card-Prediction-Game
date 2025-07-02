@@ -174,6 +174,10 @@ body {
     margin-right: 0;
 }
 
+.card.onplayer.picked {
+    box-shadow: 0 0 5px 2.5px #e90;
+}
+
 .card.onplayer .front-side, .card.onplayer .back-side {
     width: 100%;
     height: 100%;
