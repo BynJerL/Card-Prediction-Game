@@ -116,7 +116,7 @@ body {
     box-shadow: 1px 1px 2px #222;
     line-height: 1;
     position: absolute;
-    z-index: 1000;
+    z-index: 100;
     top: -20px;
 }
 
@@ -409,4 +409,12 @@ body {
     font-size: 20px;
     font-weight: 600;
     top: 18px;
+}
+
+.popup-overlay {
+    position: absolute;
+    z-index: 999;
+    width: 360px;
+    height: 670px;
+    background-color: rgba(255, 175, 4, 0.75);
 }
