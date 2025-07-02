@@ -269,6 +269,10 @@ body {
     justify-content: center;
 }
 
+.opponent .player-name.active {
+    background-color: #940;
+}
+
 .opponent {
     position: absolute;
     background-color: darkgreen;

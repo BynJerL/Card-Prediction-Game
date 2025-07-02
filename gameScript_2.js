@@ -150,6 +150,8 @@ const GameManager = {
         // Will be implemented in the future
         // this.players = shuffle(this.players);
 
+        UIManager.renderName();
+
         this.run();
     },
 
@@ -418,6 +420,25 @@ const GameManager = {
 }
 
 const UIManager = {
+    renderName () {
+        const mainPlayerName = document.querySelector("#game-mainplayer .player-name");
+        const opponentsName = document.querySelectorAll(".opponent .player-name");
+        
+        // Clear All Names
+        mainPlayerName.innerHTML = "";
+        opponentsName.forEach((playerName) => {
+            playerName.innerHTML = "";
+        });
+
+        GameManager.players.forEach((player, idx) => {
+            if (idx === 0) {
+                mainPlayerName.innerHTML = player.name;
+            } else {
+                opponentsName[idx - 1].innerHTML = player.name;
+                opponentsName[idx - 1].classList.add("active");
+            }
+        });
+    },
     renderCards () {
         const mainPlayerCardDeck = document.querySelector("#game-mainplayer .card-deck");
         const opponentsCardDeck = document.querySelectorAll("#game-board .opponent .card-deck");
@@ -453,7 +474,7 @@ const UIManager = {
                 }).join("");
             }
         });
-    }
+    },
 };
 
-GameManager.init();
+GameManager.init(7);
