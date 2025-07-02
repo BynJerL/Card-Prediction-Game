@@ -258,6 +258,7 @@ const GameManager = {
 
             player.expectedWin = confidence;
             console.log(`${player.name} predicts ${player.expectedWin} win(s).`);
+            UIManager.writeActionContent(`${player.name} predicts ${player.expectedWin} win(s).`);
             this.nextPrediction();
         }
 
@@ -513,6 +514,9 @@ const UIManager = {
                 document.getElementById("prediction-input").value--;
             }
         });
+    },
+    writeActionContent (content) {
+        document.querySelector("#game-mainplayer .action-content").innerHTML = content;
     }
 };
 
