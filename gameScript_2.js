@@ -415,6 +415,23 @@ const GameManager = {
     }
 }
 
-const UIManager = {};
+const UIManager = {
+    renderCards () {
+        const mainPlayerCardDeck = document.querySelector("#game-mainplayer .card-deck");
+        const opponentsCardDeck = document.querySelectorAll("#game-board .opponent .card-deck");
+        mainPlayerCardDeck.innerHTML = "";
+        opponentsCardDeck.forEach(cardDeck => {
+            cardDeck.innerHTML = ""
+        });
+        GameManager.players.forEach((player, idx) => {
+            if (idx === 0) {
+                for (const card of player.deck) {
+                    
+                }
+            }
+        });
+    }
+};
 
 GameManager.init();
+UIManager.renderCards();
