@@ -3,732 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Prediction</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .card-deck {
-            display: flex;
-            gap: 7px;
-        }
-
-        .card {
-            width: 30px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 1.5px 1.5px 1px;
-            background-color: #fafafa;
-            user-select: none;
-            position: relative;
-        }
-
-        .rank {
-            position: absolute;
-            top: 3px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .suit {
-            position: absolute;
-            bottom: 3px;
-        }
-
-        .hidden {
-            border: 2px dashed #888;
-            box-sizing: border-box;
-            box-shadow: 0 0 0;
-            font-weight: 500;
-            color:#444;
-        }
-
-        .submitted-card {
-            width: 60px;
-            height: 80px;
-            margin-bottom: 25px;
-            perspective: 750px;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        .card-inner, .front-side, .back-side {
-            width: 100%;
-            height: 100%;
-            border-radius: 5px;
-        }
-
-        .card-inner {
-            position: relative;
-            transition: transform 0.75s;
-            transform-style: preserve-3d;
-        }
-
-        .submitted-card.revealed .card-inner{
-            transform: rotateY(180deg);
-        }
-
-        .front-side, .back-side {
-            position: absolute;
-            top: 0;
-            left: 0;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .front-side {
-            background-color: darkslategrey;
-            font-size: 32px;
-            font-weight: 600;
-            color: #f0f0f0;
-            box-shadow: 2px 2px 1px #222;
-        }
-
-        .back-side {
-            background-color: #f0f0f0;
-            font-weight: 500;
-            transform: rotateY(180deg);
-            box-shadow: 2px 2px 1px #222;
-        }
-
-        .submitted-card-rank {
-            position: absolute;
-            top: 6px;
-            font-size: 24px;
-            font-weight: 600;
-        }
-
-        .submitted-card-suit {
-            position: absolute;
-            font-size: 28px;
-            bottom: 6px;
-        }
-
-        .player-name {
-            text-align: center;
-            color: #222;
-            font-size: 15px;
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-
-        #game-board {
-            width: 330px;
-            height: 300px;
-            display: flex;
-            align-content: center;
-            justify-content: center;
-            gap: 20px;
-            row-gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        #game-action {
-            width: 330px;
-            height: 150px;
-            background-color: #eee;
-            padding: 10px;
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        .current-player-name {
-            font-size: 18px;
-            font-weight: 640;
-            margin-bottom: 10px;
-            color: #222;
-        }
-
-        #game-items {
-            width: 310px;
-            height: 40px;
-            padding: 10px;
-            display: flex;
-            gap: 10px;
-            user-select: none;
-            align-items: center;
-            position: relative;
-            background-color: #eee;
-        }
-
-        .left-menu {
-            font-size: 24px;
-            width: 36px;
-            height: 36px;
-            background-color: #555;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-            box-shadow: 2px 2px 2px #222;
-        }
-
-        .left-menu:hover, .left-menu-active {
-            background-color: #888;
-        }
-
-        .hamburger-menu {
-            position: absolute;
-            right: 10px;
-            width: 60px;
-            height: 36px;
-            display: flex;
-            background-color: #345;
-            color: #fafafa;
-            font-weight: 500;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 2px 2px 2px #222;
-            border-radius: 5px;
-        }
-
-        .hamburger-menu:hover {
-            background-color: #688;
-        }
-
-        #score-popup-overlay {
-            width: 330px;
-            user-select: none;
-            position: absolute;
-            z-index: 1000;
-            display: none;
-        }
-
-        #score-popup-content {
-            background-color: #fafafa;
-        }
-
-        #score-table {
-            width: 100%;
-            font-size: 13px;
-            font-weight: 500;
-            text-align: center;
-            border-collapse: collapse;
-        }
-
-        #score-table th {
-            border: 1px inset #aaa;
-            box-sizing: border-box;
-        }
-        
-        #score-table tr:first-child {
-            background-color: #444;
-            color: #fafafa;
-            height: 30px;
-        }
-
-        #score-table tr td:first-child {
-            text-align: left;
-            font-size: 12.5px;
-            padding-left: 3px;
-            width: 72px;
-        }
-
-        #score-table tr td {
-            border: 1px inset #ccc;
-            width: 40px;
-            height: 40px;
-            box-sizing: border-box;
-        }
-
-        .close-menu {
-            font-size: 16px;
-            position: absolute;
-            right: 0;
-        }
-
-        .menu-head {
-            padding: 0 10px;
-            height: 24px;
-            font-size: 14px;
-            font-weight: 550;
-            position: absolute;
-            display: flex;
-            align-items: center;
-            /* background-color: #888; */
-        }
-
-        .confirm-button {
-            right: 10px;
-            bottom: 10px;
-            position: absolute;
-            width: 65px;
-            height: 30px;
-            font-size: 13.5px;
-            font-weight: 550;
-            color: #fafafa;
-            background-color: #345;
-            border-radius: 5px;
-            border: 0;
-            box-shadow: 1.5px 1.5px #222;
-        }
-
-        .confirm-button:hover {
-            background-color: #688;
-        }
-
-        #win-prediction {
-            display: none;
-            position: absolute;
-            left: 10px;
-            bottom: 10px;
-            width: 48px;
-            height: 24px;
-            font-size: 13.5px;
-        }
-    </style>
+    <title>Card Prediction Game</title>
+    <link rel="stylesheet" href="gameStyle.css">
 </head>
 <body>
-    <section id="game-items">
-        <div class="left-menu" id="score-table-button" title="Score Table">📰</div>
-        <div class="log-check left-menu" title="Log">ℹ️</div>
-        <div class="instruction left-menu" title="How to Play">📜</div>
-        <div class="hamburger-menu" title="More Menu">Menu</div>
-    </section>
-    <section id="score-popup-overlay">
-        <div id="score-popup">
-            <div id="score-popup-content">
-                <table id="score-table"></table>
-            </div>
-        </div>
-    </section>
-    <section id="game-board"></section>
-    <section id="game-action">
-        <div class="current-player-name">Placeholder</div>
-        <div class="card-deck">
-            <div class="card hidden">?</div>
-            <div class="card hidden">?</div>
-            <div class="card hidden">?</div>
-            <div class="card hidden">?</div>
-            <div class="card hidden">?</div>
-        </div>
-        <div class="text-bar">Placeholder text</div>
-        <input type="number" name="win-prediction" id="win-prediction" max="6">
-        <button class="confirm-button">Confirm</button>
+    <section id="game-container">
+        <section class="game-pages" id="start-menu"></section>
+        <section class="game-pages" id="configuration-menu"></section>
+        <section class="game-pages" id="main-game">
+            <section id="game-items">
+                <div id="score-table-button" class="menu" title="Score Table">▦</div>
+                <div id="log-check-button" class="menu" title="Log">⧗</div>
+                <div id="how-to-play-button" class="menu" title="How to Play">🛈</div>
+                <div id="option-button" class="menu" title="More Menu">☰</div>
+            </section>
+            <section class="popup-overlay" id="score-popup">
+                <div class="popup-content" id="score-popup-content">
+                    <table id="score-table">
+                        <thead>
+                            <th>Name</th>
+                            <th>Win Pred.</th>
+                            <th>Curr. Win</th>
+                            <th>Total Score</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>You</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                            </tr>
+                            <tr>
+                                <td>P2</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                            </tr>
+                            <tr>
+                                <td>P3</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                            </tr>
+                            <tr>
+                                <td>P4</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                            </tr>
+                            <tr>
+                                <td>P5</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                            </tr>
+                            <tr>
+                                <td>P6</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                                <td>n/a</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="game-board">
+                <div class="opponent" id="opponent-1">
+                    <div class="player-name">P2</div>
+                    <div class="card-deck">
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                    </div>
+                </div>
+                <div class="opponent" id="opponent-2">
+                    <div class="player-name">P3</div>
+                    <div class="card-deck">
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                    </div>
+                </div>
+                <div class="opponent" id="opponent-3">
+                    <div class="player-name">P4</div>
+                    <div class="card-deck">
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                    </div>
+                </div>
+                <div class="opponent" id="opponent-4">
+                    <div class="player-name">P5</div>
+                    <div class="card-deck">
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                    </div>
+                </div>
+                <div class="opponent" id="opponent-5">
+                    <div class="player-name">P6</div>
+                    <div class="card-deck">
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                        <div class="card ondisplay">&#x2756;</div>
+                    </div>
+                </div>
+                <div id="dealing-area">
+                    <div class="card ondeal empty">1</div>
+                    <div class="card ondeal empty">2</div>
+                    <div class="card ondeal empty">3</div>
+                    <div class="card ondeal empty">4</div>
+                    <div class="card ondeal empty">5</div>
+                    <div class="card ondeal empty">6</div>
+                </div>
+            </section>
+            <section id="game-mainplayer">
+                <div class="player-name">P1</div>
+                <div class="card-deck">
+                    <div class="card onplayer">
+                        <div class="front-side">&#x2756;</div>
+                        <div class="back-side">
+                            <div class="rank red">A</div>
+                            <div class="suit red">&hearts;</div>
+                        </div>
+                    </div>
+                    <div class="card onplayer">
+                        <div class="front-side">&#x2756;</div>
+                        <div class="back-side">
+                            <div class="rank red">2</div>
+                            <div class="suit red">&hearts;</div>
+                        </div>
+                    </div>
+                    <div class="card onplayer">
+                        <div class="front-side">&#x2756;</div>
+                        <div class="back-side">
+                            <div class="rank red">3</div>
+                            <div class="suit red">&hearts;</div>
+                        </div>
+                    </div>
+                    <div class="card onplayer">
+                        <div class="front-side">&#x2756;</div>
+                        <div class="back-side">
+                            <div class="rank red">4</div>
+                            <div class="suit red">&hearts;</div>
+                        </div>
+                    </div>
+                    <div class="card onplayer">
+                        <div class="front-side">&#x2756;</div>
+                        <div class="back-side">
+                            <div class="rank red">5</div>
+                            <div class="suit red">&hearts;</div>
+                        </div>
+                    </div>
+                    <div class="card onplayer">
+                        <div class="front-side">&#x2756;</div>
+                        <div class="back-side">
+                            <div class="rank red">6</div>
+                            <div class="suit red">&hearts;</div>
+                        </div>
+                    </div>
+                    <div class="card onplayer">
+                        <div class="front-side">&#x2756;</div>
+                        <div class="back-side">
+                            <div class="rank red">7</div>
+                            <div class="suit red">&hearts;</div>
+                        </div>
+                    </div>
+                    <div class="card onplayer">
+                        <div class="front-side">&#x2756;</div>
+                        <div class="back-side">
+                            <div class="rank red">8</div>
+                            <div class="suit red">&hearts;</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-content">
+                    How many win(s) do you want to predict?
+                    <div class="action-input">
+                        <span class="input-manip-button">&plus;</span>
+                        <input type="number" id="prediction-input" min="0" max="8" value="1">
+                        <span class="input-manip-button">&minus;</span>
+                        <span class="action-input-unit">win(s)</span>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <div id="flip-button">Flip</div>
+                    <div id="confirm-button">Confirm</div>
+                </div>
+            </section>
+        </section>
     </section>
 
+    <script src="gameScript.js"></script>
     <script>
-        const GamePhase = Object.freeze({
-            Deal: "Deal",
-            Predict: "Predict",
-            Play: "Play",
-            Score: "Score"
+        // Placeholder for game logic
+        document.getElementById('flip-button').addEventListener('click', () => {
+            const cards = document.querySelectorAll('.card.onplayer');
+            cards.forEach(card => {
+                card.classList.toggle('flipped');
+            });
         });
 
-        const PredictStrategy = Object.freeze({
-            User: "User",
-            Random: "Random",
-            Suit: "Suit",
-            Rank: "Rank",
-            RankAndSuit: "Rank and Suit",
-            RankOrSuit: "Rank or Suit"
+        document.getElementById('score-table-button').addEventListener('click', () => {
+            const scorePopup = document.getElementById('score-popup');
+            scorePopup.classList.toggle('active');
         });
-
-        const PlayingStrategy = Object.freeze({
-            User: "User",
-            Random: "Random",
-            LeadSuit: "Lead Suit",
-            Aggresive: "Aggresive",
-            MiniLoss: "Minimize Losses"
-        });
-
-        class Card {
-            constructor (suit, rank) {
-                this.suit = suit;
-                this.rank = rank;
-            }
-        }
-
-        class Player {
-            /** @param {string} name @param {PredictStrategy} predictStrategy @param {PlayingStrategy} playingStrategy*/
-            constructor (name, predictStrategy, playingStrategy) {
-                this.name = name;
-                this.deck = [];
-                this.expectedWin = null;
-                this.totalWin = 0;
-                this.roundScore = 0;
-                this.score = 0;
-                this.predictStrategy = predictStrategy;
-                this.playingStrategy = playingStrategy;
-            }
-        }
-
-        const shuffle = (array) => {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        const gameBoard = document.getElementById("game-board");
-        const gameAction = document.getElementById("game-action");
-        const gameScoreTable = document.getElementById("score-table");
-        const scorePopupOverlay = document.getElementById("score-popup-overlay");
-        const scoreButtonButton = document.getElementById("score-table-button");
-        const GameManager = {
-            totalRound: 6,
-            leadIndex: 0,
-            leadSuit: null,
-            currentIndex: 0,
-            phase: GamePhase.Deal,
-            players: [
-                new Player("Andy", PredictStrategy.User, PlayingStrategy.User),
-                new Player("Bob", PredictStrategy.Random, PlayingStrategy.Random),
-                new Player("Charles", PredictStrategy.Random, PlayingStrategy.Random),
-                new Player("Dave", PredictStrategy.Random, PlayingStrategy.Random),
-                new Player("Edwin", PredictStrategy.Random, PlayingStrategy.Random),
-                new Player("Frank", PredictStrategy.Random, PlayingStrategy.Random)
-            ],
-            cardList: [
-                new Card("♦️", "A"),
-                new Card("♦️", "2"),
-                new Card("♦️", "3"),
-                new Card("♦️", "4"),
-                new Card("♦️", "5"),
-                new Card("♦️", "6"),
-                new Card("♦️", "7"),
-                new Card("♦️", "8"),
-                new Card("♦️", "9"),
-                new Card("♦️", "10"),
-                new Card("♦️", "J"),
-                new Card("♦️", "Q"),
-                new Card("♦️", "K"),
-                new Card("♥️", "A"),
-                new Card("♥️", "2"),
-                new Card("♥️", "3"),
-                new Card("♥️", "4"),
-                new Card("♥️", "5"),
-                new Card("♥️", "6"),
-                new Card("♥️", "7"),
-                new Card("♥️", "8"),
-                new Card("♥️", "9"),
-                new Card("♥️", "10"),
-                new Card("♥️", "J"),
-                new Card("♥️", "Q"),
-                new Card("♥️", "K"),
-                new Card("♣️", "A"),
-                new Card("♣️", "2"),
-                new Card("♣️", "3"),
-                new Card("♣️", "4"),
-                new Card("♣️", "5"),
-                new Card("♣️", "6"),
-                new Card("♣️", "7"),
-                new Card("♣️", "8"),
-                new Card("♣️", "9"),
-                new Card("♣️", "10"),
-                new Card("♣️", "J"),
-                new Card("♣️", "Q"),
-                new Card("♣️", "K"),
-                new Card("♠️", "A"),
-                new Card("♠️", "2"),
-                new Card("♠️", "3"),
-                new Card("♠️", "4"),
-                new Card("♠️", "5"),
-                new Card("♠️", "6"),
-                new Card("♠️", "7"),
-                new Card("♠️", "8"),
-                new Card("♠️", "9"),
-                new Card("♠️", "10"),
-                new Card("♠️", "J"),
-                new Card("♠️", "Q"),
-                new Card("♠️", "K")
-            ],
-
-            init () {
-                this.cardList = shuffle(this.cardList);
-                // this.players = shuffle(this.players);
-
-                gameScoreTable.innerHTML = "";
-                const headerRow = document.createElement("tr");
-                const firstHeaderColumn = document.createElement("th");
-                firstHeaderColumn.textContent = "Name";
-                const secondHeaderColumn = document.createElement("th");
-                secondHeaderColumn.textContent = "Pred"
-                headerRow.appendChild(firstHeaderColumn);
-                headerRow.appendChild(secondHeaderColumn);
-                for (let r = 1; r <= this.totalRound; r++) {
-                    const roundHeadColumn = document.createElement("th");
-                    roundHeadColumn.textContent = r;
-                    headerRow.appendChild(roundHeadColumn);
-                }
-                const lastHeaderColumn = document.createElement("th");
-                lastHeaderColumn.textContent = "Score";
-                headerRow.appendChild(lastHeaderColumn);
-                gameScoreTable.appendChild(headerRow);
-
-                for (let player of this.players) {
-                    const scoreRow = document.createElement("tr");
-                    scoreRow.classList.add("player-score");
-                    const firstColumn = document.createElement("td");
-                    firstColumn.textContent = player.name;
-                    scoreRow.appendChild(firstColumn);
-                    const secondColumn = document.createElement("td");
-                    scoreRow.appendChild(secondColumn);
-                    for (let r = 0; r < this.totalRound; r++) {
-                        const roundStatus = document.createElement("td");
-                        roundStatus.classList.add("round-status");
-                        scoreRow.appendChild(roundStatus);
-                    }
-                    const lastColumn = document.createElement("td");
-                    lastColumn.classList.add("final-score");
-                    scoreRow.appendChild(lastColumn);
-                    gameScoreTable.appendChild(scoreRow);
-                }
-
-                let cardCounter = 0;
-                for (let player of this.players) {
-                    for (let j = 0; j < this.totalRound; j++) {
-                        player.deck.push(this.cardList[cardCounter++]);
-                    }
-                }
-
-                const currentPlayerName = gameAction.querySelector(".current-player-name");
-                const cardDeck = gameAction.querySelector(".card-deck");
-                currentPlayerName.textContent = this.players[this.leadIndex].name;
-
-                cardDeck.innerHTML = "";
-                for (let card of this.players[this.leadIndex].deck) {
-                    const cardDisplay = document.createElement("div");
-                    cardDisplay.classList.add("card");
-                    const cardRankDisplay = document.createElement("div");
-                    cardRankDisplay.classList.add("rank");
-                    cardRankDisplay.textContent = card.rank;
-                    const cardSuitDisplay = document.createElement("div");
-                    cardSuitDisplay.classList.add("suit");
-                    cardSuitDisplay.textContent = card.suit;
-                    cardDisplay.appendChild(cardRankDisplay);
-                    cardDisplay.appendChild(cardSuitDisplay);
-                    cardDeck.appendChild(cardDisplay);
-                }
-
-                gameBoard.innerHTML = "";
-                for (let player of this.players) {
-                    const playerCard = document.createElement("div");
-                    playerCard.classList.add("submitted-card");
-                    const playerNameDisplay = document.createElement("div");
-                    playerNameDisplay.classList.add("player-name");
-                    playerNameDisplay.textContent = player.name;
-                    const cardInner = document.createElement("div");
-                    cardInner.classList.add("card-inner");
-                    const frontSide = document.createElement("div");
-                    frontSide.classList.add("front-side");
-                    frontSide.textContent = "?";
-                    const backSide = document.createElement("div");
-                    backSide.classList.add("back-side");
-                    backSide.textContent = "None";
-                    cardInner.appendChild(frontSide);
-                    cardInner.appendChild(backSide);
-                    playerCard.appendChild(playerNameDisplay);
-                    playerCard.appendChild(cardInner);
-                    gameBoard.appendChild(playerCard);
-                }
-                
-                this.phase = GamePhase.Predict;
-                this.makePrediction();
-            },
-            makePrediction: async () => {
-                for (let player of GameManager.players) {
-                    const currentPlayerName = gameAction.querySelector(".current-player-name");
-                    currentPlayerName.textContent = player.name;
-                    const cardDeck = gameAction.querySelector(".card-deck");
-
-                    if (player.predictStrategy === PredictStrategy.User) {
-                        cardDeck.innerHTML = "";
-                        for (let card of player.deck) {
-                            const cardDisplay = document.createElement("div");
-                            cardDisplay.classList.add("card");
-                            const cardRankDisplay = document.createElement("div");
-                            cardRankDisplay.classList.add("rank");
-                            cardRankDisplay.textContent = card.rank;
-                            const cardSuitDisplay = document.createElement("div");
-                            cardSuitDisplay.classList.add("suit");
-                            cardSuitDisplay.textContent = card.suit;
-                            cardDisplay.appendChild(cardRankDisplay);
-                            cardDisplay.appendChild(cardSuitDisplay);
-                            cardDeck.appendChild(cardDisplay);
-                        }
-                        const textBar = document.querySelector("#game-action .text-bar");
-                        const winPredictionInput = document.getElementById("win-prediction");
-                        const confirmButton = document.querySelector(".confirm-button");
-                        textBar.innerHTML = "How many win do you expect?";
-                        winPredictionInput.value = "";
-                        winPredictionInput.disabled = false;
-                        winPredictionInput.style.display = "inline-block";
-                        confirmButton.disabled = false;
-                        confirmButton.textContent = "Confirm";
-
-                        await new Promise(resolve => {
-                            const handler = () => {
-                                let predictionValue = parseInt(winPredictionInput.value, 10);
-
-                                if (isNaN(predictionValue)) {
-                                    console.log(`Input should be number between 0 and ${GameManager.totalRound}!`);
-                                    alert(`Input should be number between 0 and ${GameManager.totalRound}!`);
-                                    return;
-                                }
-
-                                if (predictionValue < 0) {
-                                    console.log("Input should not less than 0.");
-                                    alert("Input should not less than 0.")
-                                    return;
-                                }
-
-                                if (predictionValue > GameManager.totalRound) {
-                                    console.log(`Input should not more than ${GameManager.totalRound}.`);
-                                    alert(`Input should not more than ${GameManager.totalRound}.`);
-                                    return;
-                                }
-
-                                player.expectedWin = predictionValue;
-                                
-                                confirmButton.removeEventListener("click", handler);
-                                winPredictionInput.disabled = true;
-                                winPredictionInput.style.display = "none";
-                                confirmButton.disabled = true;
-                                resolve();
-                            }
-                            confirmButton.addEventListener("click", handler);   
-                        });
-                    } else {
-                        cardDeck.innerHTML = "";
-                        for (let card of player.deck) {
-                            const cardDisplay = document.createElement("div");
-                            cardDisplay.classList.add("card", "hidden");
-                            cardDisplay.textContent = "?";
-                            cardDeck.appendChild(cardDisplay);
-                        }
-
-                        let confidence = 0;
-                        const confirmButton = document.querySelector(".confirm-button");
-                        const textBar = document.querySelector("#game-action .text-bar");
-                        confirmButton.disabled = false;
-                        confirmButton.textContent = "Next";
-                        switch (player.predictStrategy) {
-                            case PredictStrategy.Random: 
-                                confidence = Math.floor(Math.random() * (GameManager.totalRound + 1));
-                                break;
-                            default:
-                                break;
-                        }
-
-                        player.expectedWin = confidence;
-
-                        textBar.textContent = `This player expect to win ${player.expectedWin} time(s)`;
-
-                        await new Promise (
-                            resolve => {
-                                const handler = () => {
-                                    console.log("Confirm");
-                                    confirmButton.removeEventListener("click", handler);
-                                    resolve();
-                                };
-                                confirmButton.addEventListener("click", handler);
-                            }
-                        );
-                    }
-
-                    gameScoreTable.querySelectorAll("tr")[++GameManager.currentIndex].querySelectorAll("td")[1].textContent = player.expectedWin;
-                }
-                GameManager.phase = GamePhase.Play;
-                GameManager.play();
-            },
-
-            play: async function () {
-                for (let round = 0; round <= this.totalRound; round++) {
-                    let playedCards = [];
-                    let turnOrder = [];
-
-                    for (let i = 0; i < this.players.length; i++) {
-                        turnOrder.push(this.players[(this.leadIndex + i) % this.players.length]);
-                    }
-
-                    for (let player of turnOrder) {
-                        const cardDeck = document.querySelector(".card-deck");
-                        const currentPlayerName = document.querySelector(".current-player-name");
-                        const confirmButton = document.querySelector(".confirm-button")
-                        currentPlayerName.textContent = player.name;
-
-                        let playerCard = null;
-
-                        if (player.playingStrategy === PlayingStrategy.User) {
-                            cardDeck.innerHTML = "";
-                            await new Promise(resolveUser => {
-                                const cardElements = [];
-                                const handlers = [];
-
-                                player.deck.forEach((card, index) => {
-                                    const cardDisplay = document.createElement("div");
-                                    cardDisplay.classList.add("card");
-                                    cardDisplay.innerHTML = `<div class="rank">${card.rank}</div><div class="suit">${card.suit}</div>`;
-                                    cardDisplay.style.cursor = "pointer";
-
-                                    // Bind with correct index and handler
-                                    const cardDisplayHandler = () => {
-                                        // Only proceed if playerCard is still null
-                                        if (playerCard !== null) return;
-
-                                        playerCard = player.deck.splice(index, 1)[0];
-
-                                        const playerIdx = GameManager.players.indexOf(player);
-                                        const cardOnBoard = gameBoard.querySelectorAll(".submitted-card")[playerIdx];
-                                        const cardContent = cardOnBoard.querySelector(".card-inner .back-side");
-                                        cardContent.innerHTML = `<div class="submitted-card-rank">${playerCard.rank}</div><div class="submitted-card-suit">${playerCard.suit}</div>`;
-                                        cardOnBoard.classList.add("revealed");
-
-                                        // Disable all handlers immediately
-                                        handlers.forEach(({ el, handler }) => {
-                                            el.removeEventListener("click", handler);
-                                            el.style.cursor = "default";
-                                            el.disabled = true;
-                                        });
-
-                                        resolveUser();
-                                    };
-
-                                    handlers.push({ el: cardDisplay, handler: cardDisplayHandler });
-                                    cardDisplay.addEventListener("click", cardDisplayHandler);
-                                    cardDeck.appendChild(cardDisplay);
-                                });
-                            });
-                        } else {
-                            for (let card of player.deck) {
-                                const cardDisplay = document.createElement("div");
-                                cardDisplay.classList.add("card", "hidden");
-                                cardDisplay.textContent = "?";
-                                cardDeck.appendChild(cardDisplay);
-                            }
-
-                            switch (player.playingStrategy) {
-                                case PlayingStrategy.Random:
-                                    playedCards = player.deck.splice(Math.floor(Math.random() * player.deck.length), 1);
-                                    break;
-                                default: 
-                                    break;
-                            }
-                        }
-                    }
-                }
-            }
-        };
-
-        scoreButtonButton.onclick = function() {
-            if (scorePopupOverlay.style.display === "block") {
-                scorePopupOverlay.style.display = "none";
-                scoreButtonButton.classList.remove("left-menu-active");
-            } else {
-                scorePopupOverlay.style.display = "block";
-                scoreButtonButton.classList.add("left-menu-active");
-            }
-        }
-
-        GameManager.init();
     </script>
 </body>
 </html>

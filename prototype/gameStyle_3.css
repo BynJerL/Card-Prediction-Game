@@ -1,0 +1,467 @@
+body {
+    background-color: #111;
+    margin: 0;
+    position: relative;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#game-container {
+    width: 360px;
+    height: 720px;
+    margin: auto;
+    background-color: #f0f0f0;
+    user-select: none;
+}
+
+#game-items {
+    width: 100%;
+    height: 50px;
+    background-color: #940;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 7.5px;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 10px 1px #222;
+    z-index: 120;
+}
+
+.menu {
+    width: 32px;
+    height: 32px;
+    font-size: 24px;
+    background-color: #720;
+    color: #f0f0f0;
+    display: flex;
+    line-height: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px #320;
+}
+
+.menu:hover {
+    background-color: #420;
+    cursor: pointer;
+}
+
+#option-button {
+    position: absolute;
+    right: 10px;
+}
+
+#game-board {
+    width: 100%;
+    height: 400px;
+    background-color: green;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    font-variant: small-caps;
+}
+
+#dealing-area {
+    width: 200px;
+    height: 280px;
+    padding: 15px;
+    border: 6px double #fc0;
+    border-radius: 15px;
+    box-sizing: border-box;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    gap: 15px;
+    bottom: 30px;
+}
+
+.card.ondeal {
+    width: 45px;
+    height: 60px;
+    border: 3px dashed #fc0;
+    box-sizing: border-box;
+    border-radius: 7.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+}
+
+.card.ondeal.empty {
+    font-size: 20px;
+    font-weight: 650;
+    color: #fc0;
+}
+
+#game-mainplayer {
+    background-color: darkgreen;
+    width: 100%;
+    height: 270px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    font-variant: small-caps;
+}
+
+#game-mainplayer .player-name {
+    display: inline-block;
+    padding: 10px 15px;
+    height: 15px;
+    background-color: #940;
+    color: #f0f0f0;
+    font-weight: 600;
+    border-radius: 10px;
+    box-shadow: 1px 1px 2px #222;
+    line-height: 1;
+    position: absolute;
+    z-index: 100;
+    top: -20px;
+}
+
+#game-mainplayer .card-deck {
+    width: fit-content;
+    margin-top: 40px;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+
+.card.onplayer {
+    width: 66px;
+    height: 88px;
+    border-radius: 7.5px;
+    background-color: #f0f0f0;
+    border: 1px solid #555;
+    box-shadow: 1px 1px 2px#333;
+    margin-left: -35px;
+    transition: transform 0.2s;
+    transform-style: preserve-3d;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.card.onplayer:first-child {
+    margin-left: 0;
+}
+
+.card.onplayer:nth-child(1) {z-index: 1; }
+.card.onplayer:nth-child(2) {z-index: 2; }
+.card.onplayer:nth-child(3) {z-index: 3; }
+.card.onplayer:nth-child(4) {z-index: 4; }
+.card.onplayer:nth-child(5) {z-index: 5; }
+.card.onplayer:nth-child(6) {z-index: 6; }
+.card.onplayer:nth-child(7) {z-index: 7; }
+.card.onplayer:nth-child(8) {z-index: 8; }
+
+.card.onplayer:hover, .card.onplayer.picked {
+    transform: translateY(-15px);
+    z-index: 20;
+    margin-right: 30px;
+}
+
+.card.onplayer.flipped {
+    transform: rotateY(180deg);
+}
+
+.card.onplayer.flipped:hover, .card.onplayer.flipped.picked{
+    transform: rotateY(180deg) translateY(-15px);
+}
+
+.card.onplayer:last-child:hover, .card.onplayer:last-child.picked {
+    margin-right: 0;
+}
+
+.card.onplayer.picked {
+    box-shadow: 0 0 5px 2.5px #e90;
+}
+
+.card.onplayer .front-side, .card.onplayer .back-side {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: inherit;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.card.onplayer .front-side {
+    background-color: #05b;
+    color: #fc0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    line-height: 1;
+    border: 6px double #fc0;
+    box-sizing: border-box;
+}
+
+.card.onplayer .back-side {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    background-color: #f0f0f0;
+    transform: rotateY(180deg);
+}
+
+.card.onplayer .back-side .suit {
+    position: absolute;
+    line-height: 1;
+    bottom: 10px;
+    font-size: 36px;
+}
+
+.card.onplayer .back-side .rank {
+    position: absolute;
+    line-height: 1;
+    top: 10px;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.card .red {
+    color: #c00;
+}
+
+.card .black {
+    color: #111;
+}
+
+.action-buttons {
+    width: 100%;
+    display: flex;
+    position: absolute;
+    top: 200px;
+    gap: 15px;
+    justify-content: center;
+}
+
+.action-buttons * {
+    height: 35px;
+    padding: 0 20px;
+    color: #f0f0f0;
+    background-color: #720;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 7px;
+    box-shadow: 1px 1px 2px #222;
+    cursor: pointer;
+}
+
+.action-buttons *:hover {
+    background-color: #420;
+}
+
+.opponent .player-name {
+    width: 60px;
+    height: 24px;
+    font-size: 12.5px;
+    background-color: #720;
+    box-shadow: 1px 1px 2px #222;
+    box-sizing: border-box;
+    font-weight: 600;
+    color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.opponent .player-name.active {
+    background-color: #940;
+}
+
+.opponent {
+    position: absolute;
+    background-color: darkgreen;
+}
+
+#opponent-1 {
+    top: 10px;
+    width: 180px;
+    height: 60px;
+}
+
+#opponent-2 {
+    top: 20px;
+    left: 0px;
+    width: 60px;
+    height: 160px;
+}
+
+#opponent-3 {
+    top: 20px;
+    right: 0px;
+    width: 60px;
+    height: 160px;
+}
+
+#opponent-4 {
+    top: 210px;
+    left: 0px;
+    width: 60px;
+    height: 160px;
+}
+
+#opponent-5 {
+    top: 210px;
+    right: 0px;
+    width: 60px;
+    height: 160px;
+}
+
+.opponent .card-deck {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+#opponent-2 .card-deck, #opponent-4 .card-deck {
+    left: 15px;
+    top: 30px;
+}
+
+#opponent-3 .card-deck, #opponent-5 .card-deck {
+    right: 15px;
+    top: 30px;
+}
+
+.opponent:first-child .card-deck{
+    flex-direction: row;
+    left: 75px;
+    top: 10px;
+}
+
+.opponent .card-deck .card {
+    width: 27px;
+    height: 36px;
+    font-size: 18px;
+    color: #fc0;
+    background-color: #05b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px double #fc0;
+    box-sizing: border-box;
+    transform: rotatez(90deg);
+    margin-bottom: -24px;
+    line-height: 0;
+    letter-spacing: 0;
+}
+
+.opponent:first-child .card-deck .card {
+    margin-top: 0;
+    margin-right: -18px;
+    transform: none;
+}
+
+.action-content {
+    position: absolute;
+    top: 140px;
+    color: #f0f0f0;
+    font-weight: 550;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-manip-button {
+    display: inline-block;
+    background-color: #720;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 1;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-manip-button:hover {
+    background-color: #420;
+}
+
+#prediction-input {
+    width: 32px;
+}
+
+.card.ondeal.occupied {
+    position: relative;
+    background-color: #f0f0f0;
+    border: 0;
+    box-shadow: 2px 2px 4px #333;
+}
+
+.card.ondeal.occupied .suit {
+    position: absolute;
+    font-size: 28px;
+    bottom: 18px;
+}
+
+.card.ondeal.occupied .rank {
+    position: absolute;
+    font-size: 20px;
+    font-weight: 600;
+    top: 18px;
+}
+
+.popup-overlay {
+    position: absolute;
+    z-index: 110;
+    width: 360px;
+    height: 670px;
+    background-color: rgba(32, 32, 32, 0.75);
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.popup-overlay #score-table {
+    width: 100%;
+    border: 1px solid#f0f0f0;
+    border-collapse: collapse;
+}
+
+#score-table * {
+    border: 1px solid #f0f0f0;
+    color: #f0f0f0;
+}
+
+#score-table thead {
+    background-color: #f0f0f0;
+}
+
+#score-table th {
+    color: #420;
+    font-size: 14px;
+}
+
+#score-table tr {
+    text-align: center;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#score-table tr td:first-child {
+    text-align: left;
+    border-collapse: collapse;
+    padding-left: 10px;
+}
+
+#score-table th:first-child {
+    width: 100px;
+}
+
+#score-popup {
+    display: none;
+}
+
+#score-popup.active {
+    display: block;
+}
