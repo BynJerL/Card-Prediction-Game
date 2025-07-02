@@ -205,7 +205,7 @@ const GameManager = {
             // Show the deck
             UIManager.showPredictionInput();
             // Will be put on event listener
-            document.getElementById("confirm-button").addEventListener("click", (e) => {
+            document.getElementById("confirm-button").onclick = () => {
                 confidence = parseInt(document.getElementById("prediction-input").value);
                 if (isNaN(confidence)) {
                     alert(`Input must be a number, between 0 and ${this.totalRound}`);
@@ -226,7 +226,7 @@ const GameManager = {
 
                 UIManager.clearActionContent();
                 this.nextPrediction(); 
-            });
+            };
         } else {
             // Show the deck, but hide the card
             // AI doing some calculation for the win expectation
