@@ -395,6 +395,7 @@ const GameManager = {
 
         const winner = this.roundState.turnOrder[this.roundState.winnerIndex];
         console.log(`${winner.name} wins!`);
+        UIManager.writeActionContent(`<div>The winner is:</div><div>${winner.name}</div>`);
         winner.totalWin++;
 
         if (this.roundState.round < this.totalRound) {
@@ -413,7 +414,11 @@ const GameManager = {
             this.phase = GamePhase.End;
         }
 
-        this.run();
+        document.getElementById("confirm-button").onclick = () => {
+            UIManager.clearActionContent();
+            UIManager.clearDealingArea();
+            this.run();
+        }
     },
 
     handleGameEndPhase () {
