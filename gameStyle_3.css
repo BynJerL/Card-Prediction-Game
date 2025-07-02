@@ -390,3 +390,23 @@ body {
 #prediction-input {
     width: 32px;
 }
+
+.card.ondeal.occupied {
+    position: relative;
+    background-color: #f0f0f0;
+    border: 0;
+    box-shadow: 2px 2px 4px #333;
+}
+
+.card.ondeal.occupied .suit {
+    position: absolute;
+    font-size: 28px;
+    bottom: 18px;
+}
+
+.card.ondeal.occupied .rank {
+    position: absolute;
+    font-size: 20px;
+    font-weight: 600;
+    top: 18px;
+}

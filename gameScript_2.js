@@ -124,7 +124,7 @@ const GameManager = {
     phase: null,
     cards: [],
     players: [
-        new Player("You", PredictStrategy.User, PlayingStrategy.Aggresive),
+        new Player("You", PredictStrategy.User, PlayingStrategy.User),
         new Player("Bob", PredictStrategy.Random, PlayingStrategy.Random),
         new Player("Charles", PredictStrategy.Suit, PlayingStrategy.LeadSuit),
         new Player("Dave", PredictStrategy.Random, PlayingStrategy.Random),
@@ -261,7 +261,10 @@ const GameManager = {
             console.log(`${player.name} predicts ${player.expectedWin} win(s).`);
             UIManager.writeActionContent(`${player.name} predicts ${player.expectedWin} win(s).`);
 
-            document.getElementById("confirm-button").onclick = () => {this.nextPrediction();};
+            document.getElementById("confirm-button").onclick = () => {
+                UIManager.clearActionContent();
+                this.nextPrediction();
+            };
         }
 
         // Add event listener to the actionButton (will be handled by UI Manager).
@@ -295,10 +298,42 @@ const GameManager = {
     handlePlayingPhase () {
         // leadIndex and turnIndex will be decided here
         const player = this.roundState.turnOrder[this.roundState.turn];
-        var playedCard;
+        var playedCard = null;
 
         if (player.playingStrategy === PlayingStrategy.User) {
-            // Shows the card
+            UIManager.writeActionContent("Choose a card");
+            document.getElementById("confirm-button").onclick = () => {                
+                document.querySelectorAll('.card.onplayer').forEach((cardElement, idx) => {
+                    if (cardElement.classList.contains("picked")) {
+                        playedCard = player.deck[idx];
+                    }
+                });
+
+                if (playedCard === null) return;
+                
+                let playerIndex = this.players.indexOf(player); 
+                player.removeCard(playedCard);
+                this.roundState.playedCards.push(playedCard);
+                const cardOnDeal = document.querySelectorAll("#dealing-area .card.ondeal")[playerIndex];
+                cardOnDeal.classList.remove("empty");
+                cardOnDeal.classList.add("occupied");
+
+                let color = "";
+                switch (playedCard.suit) {
+                    case CardSuit.Heart:
+                    case CardSuit.Diamond:
+                        color = " red";
+                        break;
+                    case CardSuit.Club:
+                    case CardSuit.Spade:
+                        color = " black";
+                        break;
+                }
+
+                cardOnDeal.innerHTML = `<div class="rank${color}">${playedCard.rank}</div><div class="suit${color}">${playedCard.suit}</div>`;
+                UIManager.renderCards();
+                this.nextTurn();
+            }
         } else {
             // Also shows the card, but hide the value
             switch (player.playingStrategy) {
@@ -337,9 +372,8 @@ const GameManager = {
             if (this.roundState.turn == 0) {
                 this.roundState.leadSuit = playedCard.suit;
             }
+            this.nextTurn();
         }
-
-        this.nextTurn();
     },
 
     nextTurn () {
@@ -491,6 +525,20 @@ const UIManager = {
                 }).join("");
             }
         });
+
+        document.querySelectorAll('.card.onplayer').forEach(card => {
+            card.addEventListener('click', () => {
+                if (!card.classList.contains('flipped')) return;
+                const previousState = card.classList.contains('picked');
+                document.querySelectorAll('.card.onplayer').forEach(c => c.classList.remove('picked'));
+                if (!previousState) {
+                    card.classList.add('picked');
+                }
+            });
+        });
+    },
+    clearDealingArea () {
+
     },
     clearActionContent () {
         document.querySelector("#game-mainplayer .action-content").innerHTML = "";

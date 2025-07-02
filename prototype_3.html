@@ -186,17 +186,6 @@
                 card.classList.toggle('flipped');
             });
         });
-
-        document.querySelectorAll('.card.onplayer').forEach(card => {
-            card.addEventListener('click', () => {
-                if (!card.classList.contains('flipped')) return;
-                const previousState = card.classList.contains('picked');
-                document.querySelectorAll('.card.onplayer').forEach(c => c.classList.remove('picked'));
-                if (!previousState) {
-                    card.classList.add('picked');
-                }
-            });
-        });
     </script>
 </body>
 </html>
