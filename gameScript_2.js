@@ -496,12 +496,23 @@ const UIManager = {
         document.querySelector("#game-mainplayer .action-content").innerHTML = `
         How many win(s) do you want to predict?
         <div class="action-input">
-            <span class="input-manip-button">&plus;</span>
+            <span class="input-manip-button" id="plus-button">&plus;</span>
             <input type="number" id="prediction-input" min="0" max="${GameManager.totalRound}" value="1">
-            <span class="input-manip-button">&minus;</span>
+            <span class="input-manip-button" id="minus-button">&minus;</span>
             <span class="action-input-unit">win(s)</span>
         </div>`;
-        
+        document.getElementById("plus-button").addEventListener("click", (e) => {
+            const inputValue = document.getElementById("prediction-input").value;
+            if (inputValue < GameManager.totalRound) {
+                document.getElementById("prediction-input").value++;
+            }
+        });
+        document.getElementById("minus-button").addEventListener("click", (e) => {
+            const inputValue = document.getElementById("prediction-input").value;
+            if (inputValue > 0) {
+                document.getElementById("prediction-input").value--;
+            }
+        });
     }
 };
 
