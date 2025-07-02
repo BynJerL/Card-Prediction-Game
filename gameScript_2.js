@@ -223,6 +223,7 @@ const GameManager = {
                 }
                 
                 player.expectedWin = confidence;
+                console.log("User confirm the win(s) prediction");
 
                 UIManager.clearActionContent();
                 this.nextPrediction(); 
@@ -259,7 +260,8 @@ const GameManager = {
             player.expectedWin = confidence;
             console.log(`${player.name} predicts ${player.expectedWin} win(s).`);
             UIManager.writeActionContent(`${player.name} predicts ${player.expectedWin} win(s).`);
-            this.nextPrediction();
+
+            document.getElementById("confirm-button").onclick = () => {this.nextPrediction();};
         }
 
         // Add event listener to the actionButton (will be handled by UI Manager).
