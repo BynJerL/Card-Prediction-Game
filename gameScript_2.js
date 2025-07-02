@@ -318,6 +318,10 @@ const GameManager = {
                 cardOnDeal.classList.remove("empty");
                 cardOnDeal.classList.add("occupied");
 
+                if (this.roundState.turn == 0) {
+                    this.roundState.leadSuit = playedCard.suit;
+                }
+
                 let color = "";
                 switch (playedCard.suit) {
                     case CardSuit.Heart:
