@@ -125,11 +125,11 @@ const GameManager = {
     cards: [],
     players: [
         new Player("You", PredictStrategy.User, PlayingStrategy.User),
-        new Player("Bob", PredictStrategy.Random, PlayingStrategy.Random),
+        new Player("Bob", PredictStrategy.Rank, PlayingStrategy.LeadSuit),
         new Player("Charles", PredictStrategy.Suit, PlayingStrategy.LeadSuit),
         new Player("Dave", PredictStrategy.Random, PlayingStrategy.Random),
-        new Player("Edwin", PredictStrategy.Random, PlayingStrategy.Random),
-        new Player("Frank", PredictStrategy.Random, PlayingStrategy.Random)
+        new Player("Edwin", PredictStrategy.RankOrSuit, PlayingStrategy.LeadSuit),
+        new Player("Frank", PredictStrategy.RankAndSuit, PlayingStrategy.LeadSuit)
     ],
 
     /** @param {number} totalRound*/
