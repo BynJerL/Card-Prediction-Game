@@ -150,6 +150,7 @@ const GameManager = {
         // Will be implemented in the future
         // this.players = shuffle(this.players);
 
+        UIManager.clearTable();
         UIManager.renderName();
 
         this.run();
@@ -225,6 +226,7 @@ const GameManager = {
                 player.expectedWin = confidence;
                 console.log("User confirm the win(s) prediction");
 
+                UIManager.renderTable();
                 UIManager.clearActionContent();
                 this.nextPrediction(); 
             };
@@ -260,6 +262,7 @@ const GameManager = {
             player.expectedWin = confidence;
             console.log(`${player.name} predicts ${player.expectedWin} win(s).`);
             UIManager.writeActionContent(`${player.name} predicts ${player.expectedWin} win(s).`);
+            UIManager.renderTable();
 
             document.getElementById("confirm-button").onclick = () => {
                 UIManager.clearActionContent();
@@ -394,9 +397,10 @@ const GameManager = {
         }
 
         const winner = this.roundState.turnOrder[this.roundState.winnerIndex];
+        winner.totalWin++;
         console.log(`${winner.name} wins!`);
         UIManager.writeActionContent(`<div>The winner is:</div><div>${winner.name}</div>`);
-        winner.totalWin++;
+        UIManager.renderTable();
 
         if (this.roundState.round < this.totalRound) {
             this.phase = GamePhase.Play;
@@ -434,6 +438,9 @@ const GameManager = {
         for (const player of this.players) {
             console.log(`${player.name} -> ${player.totalScore}`);
         }
+
+        UIManager.renderTable();
+        document.getElementById("score-popup").classList.add("active");
 
         this.phase = null;
         // this.handlePlayAgain();
@@ -586,6 +593,30 @@ const UIManager = {
     },
     writeActionContent (content) {
         document.querySelector("#game-mainplayer .action-content").innerHTML = content;
+    },
+    clearTable () {
+        document.querySelector("#score-table tbody").innerHTML = GameManager.players.map(
+            player => {
+                return `<tr>
+                    <td>${player.name}</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>${player.totalScore}</td>
+                </tr>`;
+            }
+        ).join("");
+    },
+    renderTable () {
+        document.querySelector("#score-table tbody").innerHTML = GameManager.players.map(
+            player => {
+                return `<tr>
+                    <td>${player.name}</td>
+                    <td>${player.expectedWin !== null? player.expectedWin: '-'}</td>
+                    <td>${player.totalWin !== null? player.totalWin: '-'}</td>
+                    <td>${player.totalScore}</td>
+                </tr>`;
+            }
+        ).join("");
     }
 };
 
