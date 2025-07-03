@@ -429,7 +429,13 @@ const GameManager = {
         // Will calculate the final score
         console.log("\nFinal Score");
         for (const player of this.players) {
-            const finalScore = (player.totalWin === player.expectedWin? 1: -1) * (player.expectedWin) * 10;
+            // const finalScore = (player.totalWin === player.expectedWin? 1: -1) * (player.expectedWin) * 10;
+            let finalScore;
+            if (player.expectedWin === player.totalWin) {
+                finalScore = player.expectedWin * 10; 
+            } else {
+                finalScore = (player.expectedWin === 0)? -10 : -10 * player.expectedWin;
+            }
             player.totalScore += finalScore;
             console.log(`${player.name} -> ${finalScore}`);
         }
