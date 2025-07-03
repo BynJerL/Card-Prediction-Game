@@ -469,12 +469,12 @@ const GameManager = {
             noButton.classList.add("disabled");
             this.init(7);
         };
-        noButton.onClick = () => {
+        noButton.onclick = () => {
             UIManager.writeActionContent(`Your final score: ${this.players[0].totalScore}`);
             document.querySelectorAll(".action-button").forEach(button => {
                 button.classList.add("disabled");
             });
-        }
+        };
     },
 
     run () {
