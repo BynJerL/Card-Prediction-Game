@@ -443,13 +443,31 @@ const GameManager = {
         document.getElementById("score-popup").classList.add("active");
 
         this.phase = null;
-        // this.handlePlayAgain();
+        this.handlePlayAgain();
     },
 
     handlePlayAgain () {
-        const answer = prompt("Play Again?");
-        if (answer === "yes") {
-            this.init();
+        UIManager.writeActionContent("Do you want to play again?");
+        document.querySelectorAll(".action-button").forEach(button => {
+            button.classList.add("disabled");
+        });
+        const yesButton = document.getElementById("yes-button");
+        const noButton = document.getElementById("no-button");
+        yesButton.classList.remove("disabled");
+        noButton.classList.remove("disabled");
+        yesButton.onclick = () => {
+            document.querySelectorAll(".action-button").forEach(button => {
+                button.classList.remove("disabled");
+            });
+            yesButton.classList.add("disabled");
+            noButton.classList.add("disabled");
+            this.init(7);
+        };
+        noButton.onClick = () => {
+            UIManager.writeActionContent(`Your final score: ${this.players[0].totalScore}`);
+            document.querySelectorAll(".action-button").forEach(button => {
+                button.classList.add("disabled");
+            });
         }
     },
 

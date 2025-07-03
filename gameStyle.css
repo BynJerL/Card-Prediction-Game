@@ -465,3 +465,7 @@ body {
 #score-popup.active {
     display: block;
 }
+
+.action-buttons .disabled {
+    display: none;
+}
