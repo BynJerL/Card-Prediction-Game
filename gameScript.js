@@ -309,6 +309,7 @@ const GameManager = {
         if (player.playingStrategy === PlayingStrategy.User) {
             UIManager.writeActionContent("Choose a card");
             document.getElementById("confirm-button").textContent = "Confirm";
+            document.getElementById("confirm-button").classList.add("locked");
             document.getElementById("confirm-button").onclick = () => {                
                 document.querySelectorAll('.card.onplayer').forEach((cardElement, idx) => {
                     if (cardElement.classList.contains("picked")) {
@@ -316,6 +317,7 @@ const GameManager = {
                     }
                 });
 
+                if (document.getElementById("confirm-button").classList.contains("locked")) return;
                 if (playedCard === null) return;
                 
                 player.removeCard(playedCard);
@@ -571,6 +573,7 @@ const UIManager = {
                 if (!previousState) {
                     card.classList.add('picked');
                 }
+                document.getElementById("confirm-button").classList.remove("locked");
             });
         });
     },
