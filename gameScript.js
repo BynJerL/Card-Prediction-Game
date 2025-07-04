@@ -462,6 +462,7 @@ const GameManager = {
 
         UIManager.renderTable();
         UIManager.highlightPlayer(null);
+        document.getElementById("howtoplay-popup").classList.remove("active");
         document.getElementById("score-popup").classList.add("active");
 
         this.phase = null;

@@ -67,6 +67,27 @@
                     </table>
                 </div>
             </section>
+            <section class="popup-overlay" id="howtoplay-popup">
+                <div class="popup-content" id="howtoplay-popup-content">
+                    <div class="popup-heading">❓ How to Play:</div>
+                    <ul>
+                        <li>The game is played with a standard 52-card deck.</li>
+                        <li>Try to guess how many round you will win. It will depend on your card.</li>
+                    </ul>
+
+                    <div class="popup-heading">📜 Final scoring:</div>
+                    <ul>
+                        <li>Your total win matches your earlier win prediction: <em>+10 x your prediction</em></li>
+                        <li>Your total win didn't match your prediction: <em>-10 x your prediction</em> (1 to total round) or <em>-10</em> (if your prediction is 0)</li>
+                    </ul>
+
+                    <div class="popup-heading">🔍 Card value:</div>
+                    <ul>
+                        <li>High to low <strong>rank</strong>: A, K, Q, J, 10, 9, 8, 7, 6, 5, 4, 3, 2</li>
+                        <li>High to low <strong>suit</strong>: Spade, Lead Suit (could be anything), Non-Lead Suit (any suit except spade).</li>
+                    </ul>
+                </div>
+            </section>
             <section id="game-board">
                 <div class="opponent" id="opponent-1">
                     <div class="player-name">P2</div>
@@ -233,7 +254,16 @@
 
         document.getElementById('score-table-button').addEventListener('click', () => {
             const scorePopup = document.getElementById('score-popup');
+            const howToPlayPopup = document.getElementById('howtoplay-popup');
+            howToPlayPopup.classList.remove('active');
             scorePopup.classList.toggle('active');
+        });
+
+        document.getElementById('how-to-play-button').addEventListener('click', () => {
+            const scorePopup = document.getElementById('score-popup');
+            const howToPlayPopup = document.getElementById('howtoplay-popup');
+            scorePopup.classList.remove('active');
+            howToPlayPopup.classList.toggle('active');
         });
     </script>
 </body>
