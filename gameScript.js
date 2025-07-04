@@ -664,8 +664,10 @@ const UIManager = {
         GameManager.players.forEach((player, idx) => {
             if (idx === 0) {
                 if (player === GameManager.roundState.turnOrder[GameManager.roundState.turn]) {
+                    document.querySelector("#game-mainplayer .player-name").classList.remove("inactive");
                     document.querySelector("#game-mainplayer .card-deck").classList.remove("inactive");
                 } else {
+                    document.querySelector("#game-mainplayer .player-name").classList.add("inactive");
                     document.querySelector("#game-mainplayer .card-deck").classList.add("inactive");
                 }
             } else {
@@ -681,8 +683,10 @@ const UIManager = {
         GameManager.players.forEach((player, idx) => {
             if (idx === 0) {
                 if (player === GameManager.roundState.turnOrder[GameManager.roundState.winnerIndex]) {
+                    document.querySelector("#game-mainplayer .player-name").classList.remove("inactive");
                     document.querySelector("#game-mainplayer .card-deck").classList.remove("inactive");
                 } else {
+                    document.querySelector("#game-mainplayer .player-name").classList.add("inactive");
                     document.querySelector("#game-mainplayer .card-deck").classList.add("inactive");
                 }
             } else {
@@ -698,8 +702,10 @@ const UIManager = {
         GameManager.players.forEach((player, idx) => {
             if (idx === 0) {
                 if (player === playerInFactor) {
+                    document.querySelector("#game-mainplayer .player-name").classList.remove("inactive");
                     document.querySelector("#game-mainplayer .card-deck").classList.remove("inactive");
                 } else {
+                    document.querySelector("#game-mainplayer .player-name").classList.add("inactive");
                     document.querySelector("#game-mainplayer .card-deck").classList.add("inactive");
                 }
             } else {
