@@ -476,3 +476,7 @@ body {
 #confirm-button.locked {
     background-color: #332;
 }
+
+.inactive {
+    filter: brightness(0.6);
+}

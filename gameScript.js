@@ -201,6 +201,7 @@ const GameManager = {
 
         // Placeholder for displaying the player cards/UI Handler
         console.log(`${player.name}`);
+        UIManager.markInactivePlayers();
 
         if (player.predictStrategy === PredictStrategy.User) {
             // Show the deck
@@ -305,6 +306,8 @@ const GameManager = {
         const player = this.roundState.turnOrder[this.roundState.turn];
         var playedCard = null;
         var playerIndex = this.players.indexOf(player);
+        
+        UIManager.markInactivePlayers();
 
         if (player.playingStrategy === PlayingStrategy.User) {
             UIManager.writeActionContent("Choose a card");
@@ -653,6 +656,23 @@ const UIManager = {
                 </tr>`;
             }
         ).join("");
+    },
+    markInactivePlayers () {
+        GameManager.players.forEach((player, idx) => {
+            if (idx === 0) {
+                if (player === GameManager.roundState.turnOrder[GameManager.roundState.turn]) {
+                    document.querySelector("#game-mainplayer .card-deck").classList.remove("inactive");
+                } else {
+                    document.querySelector("#game-mainplayer .card-deck").classList.add("inactive");
+                }
+            } else {
+                if (player === GameManager.roundState.turnOrder[GameManager.roundState.turn]) {
+                    document.querySelectorAll(".opponent")[idx - 1].classList.remove("inactive");
+                } else {
+                    document.querySelectorAll(".opponent")[idx - 1].classList.add("inactive");
+                }
+            }
+        });
     }
 };
 
