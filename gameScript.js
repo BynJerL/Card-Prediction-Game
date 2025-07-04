@@ -413,6 +413,7 @@ const GameManager = {
         winner.totalWin++;
         console.log(`${winner.name} wins!`);
         UIManager.writeActionContent(`<div>The winner is:</div><div>${winner.name}</div>`);
+        UIManager.highlightPlayer(winner);
         UIManager.renderTable();
 
         if (this.roundState.round < this.totalRound) {
@@ -460,6 +461,7 @@ const GameManager = {
         }
 
         UIManager.renderTable();
+        UIManager.highlightPlayer(null);
         document.getElementById("score-popup").classList.add("active");
 
         this.phase = null;
@@ -667,6 +669,40 @@ const UIManager = {
                 }
             } else {
                 if (player === GameManager.roundState.turnOrder[GameManager.roundState.turn]) {
+                    document.querySelectorAll(".opponent")[idx - 1].classList.remove("inactive");
+                } else {
+                    document.querySelectorAll(".opponent")[idx - 1].classList.add("inactive");
+                }
+            }
+        });
+    },
+    highlightWinner () {
+        GameManager.players.forEach((player, idx) => {
+            if (idx === 0) {
+                if (player === GameManager.roundState.turnOrder[GameManager.roundState.winnerIndex]) {
+                    document.querySelector("#game-mainplayer .card-deck").classList.remove("inactive");
+                } else {
+                    document.querySelector("#game-mainplayer .card-deck").classList.add("inactive");
+                }
+            } else {
+                if (player === GameManager.roundState.turnOrder[GameManager.roundState.winnerIndex]) {
+                    document.querySelectorAll(".opponent")[idx - 1].classList.remove("inactive");
+                } else {
+                    document.querySelectorAll(".opponent")[idx - 1].classList.add("inactive");
+                }
+            }
+        });
+    },
+    highlightPlayer (playerInFactor) {
+        GameManager.players.forEach((player, idx) => {
+            if (idx === 0) {
+                if (player === playerInFactor) {
+                    document.querySelector("#game-mainplayer .card-deck").classList.remove("inactive");
+                } else {
+                    document.querySelector("#game-mainplayer .card-deck").classList.add("inactive");
+                }
+            } else {
+                if (player === playerInFactor) {
                     document.querySelectorAll(".opponent")[idx - 1].classList.remove("inactive");
                 } else {
                     document.querySelectorAll(".opponent")[idx - 1].classList.add("inactive");
