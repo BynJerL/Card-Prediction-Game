@@ -460,12 +460,19 @@ body {
 
 #score-popup {
     display: none;
+    transition: all 1s ease;
 }
 
 #score-popup.active {
     display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .action-buttons .disabled {
     display: none;
+}
+
+#confirm-button.locked {
+    background-color: #332;
 }

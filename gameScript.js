@@ -206,6 +206,7 @@ const GameManager = {
             // Show the deck
             UIManager.showPredictionInput();
             // Will be put on event listener
+            document.getElementById("confirm-button").textContent = "Confirm";
             document.getElementById("confirm-button").onclick = () => {
                 confidence = parseInt(document.getElementById("prediction-input").value);
                 if (isNaN(confidence)) {
@@ -264,6 +265,7 @@ const GameManager = {
             UIManager.writeActionContent(`${player.name} predicts ${player.expectedWin} win(s).`);
             UIManager.renderTable();
 
+            document.getElementById("confirm-button").textContent = "Next";
             document.getElementById("confirm-button").onclick = () => {
                 UIManager.clearActionContent();
                 this.nextPrediction();
@@ -306,6 +308,7 @@ const GameManager = {
 
         if (player.playingStrategy === PlayingStrategy.User) {
             UIManager.writeActionContent("Choose a card");
+            document.getElementById("confirm-button").textContent = "Confirm";
             document.getElementById("confirm-button").onclick = () => {                
                 document.querySelectorAll('.card.onplayer').forEach((cardElement, idx) => {
                     if (cardElement.classList.contains("picked")) {
@@ -324,7 +327,11 @@ const GameManager = {
 
                 UIManager.insertCardToDealingArea(playerIndex, playedCard);
                 UIManager.renderCards();
-                this.nextTurn();
+                UIManager.writeActionContent(`You gave ${playedCard.rank}${playedCard.suit}`);
+                document.getElementById("confirm-button").textContent = "Next";
+                document.getElementById("confirm-button").onclick = () => {
+                    this.nextTurn();
+                };
             }
         } else {
             // Also shows the card, but hide the value
@@ -367,6 +374,7 @@ const GameManager = {
                 this.roundState.leadSuit = playedCard.suit;
             }
 
+            document.getElementById("confirm-button").textContent = "Next";
             document.getElementById("confirm-button").onclick = () => {this.nextTurn();};
         }
     },
@@ -418,6 +426,7 @@ const GameManager = {
             this.phase = GamePhase.End;
         }
 
+        document.getElementById("confirm-button").textContent = "Next";
         document.getElementById("confirm-button").onclick = () => {
             UIManager.clearActionContent();
             UIManager.clearDealingArea();
